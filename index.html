@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國中會考英語文法複習</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #21262d;
+  --border: #30363d;
+  --accent: #f0883e;
+  --accent2: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --radius: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(88,166,255,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(240,136,62,0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app {
+  width: 100%;
+  max-width: 760px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  margin-bottom: 36px;
+  animation: fadeDown 0.6s ease;
+}
+.header h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+.header p {
+  color: var(--muted);
+  margin-top: 6px;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  animation: fadeUp 0.5s ease;
+}
+
+/* ── TOPIC SELECTION ── */
+.section-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.topic-btn {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  padding: 12px 16px;
+  cursor: pointer;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.85rem;
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.4;
+}
+.topic-btn .count-badge {
+  margin-left: auto;
+  font-size: 0.72rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 8px;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.topic-btn:hover, .topic-btn.active {
+  border-color: var(--accent2);
+  background: rgba(88,166,255,0.08);
+  color: var(--accent2);
+}
+.topic-btn.random {
+  background: linear-gradient(135deg, rgba(240,136,62,0.12), rgba(88,166,255,0.12));
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+  justify-content: center;
+  grid-column: 1 / -1;
+}
+.topic-btn.random:hover, .topic-btn.random.active {
+  background: linear-gradient(135deg, rgba(240,136,62,0.25), rgba(88,166,255,0.2));
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── COUNT SELECTION ── */
+.count-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.count-btn {
+  flex: 1;
+  min-width: 60px;
+  padding: 12px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s;
+}
+.count-btn:hover, .count-btn.active {
+  border-color: var(--accent);
+  background: rgba(240,136,62,0.1);
+  color: var(--accent);
+}
+.count-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── START BUTTON ── */
+.btn-start {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--accent), #e07b30);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 24px rgba(240,136,62,0.3);
+}
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(240,136,62,0.4);
+}
+.btn-start:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ── QUIZ SCREEN ── */
+.quiz-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.progress-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+  min-width: 120px;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+.progress-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.question-stem {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 24px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+.blank {
+  display: inline-block;
+  min-width: 60px;
+  border-bottom: 2px solid var(--accent2);
+  color: var(--accent2);
+  font-weight: 700;
+  padding: 0 4px;
+}
+
+.options-grid {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.option-btn {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.95rem;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: all 0.2s;
+  line-height: 1.5;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--accent2);
+  background: rgba(88,166,255,0.07);
+}
+.option-letter {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.option-btn.correct {
+  border-color: var(--green);
+  background: rgba(63,185,80,0.1);
+}
+.option-btn.correct .option-letter {
+  background: var(--green);
+  color: #fff;
+}
+.option-btn.wrong {
+  border-color: var(--red);
+  background: rgba(248,81,73,0.1);
+}
+.option-btn.wrong .option-letter {
+  background: var(--red);
+  color: #fff;
+}
+.option-btn:disabled {
+  cursor: default;
+}
+
+/* ── FEEDBACK ── */
+.feedback-box {
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  animation: fadeUp 0.35s ease;
+  display: none;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct-fb {
+  background: rgba(63,185,80,0.1);
+  border: 1.5px solid rgba(63,185,80,0.35);
+}
+.feedback-box.wrong-fb {
+  background: rgba(248,81,73,0.08);
+  border: 1.5px solid rgba(248,81,73,0.3);
+}
+.feedback-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.feedback-box.correct-fb .feedback-title { color: var(--green); }
+.feedback-box.wrong-fb .feedback-title { color: var(--red); }
+.feedback-answer {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.feedback-explanation {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.btn-next {
+  width: 100%;
+  padding: 14px;
+  background: var(--surface2);
+  border: 1.5px solid var(--accent2);
+  border-radius: 12px;
+  color: var(--accent2);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: none;
+}
+.btn-next.show { display: block; }
+.btn-next:hover {
+  background: rgba(88,166,255,0.1);
+}
+
+/* ── RESULTS ── */
+.result-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.score-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-family: 'Sora', sans-serif;
+}
+.score-pct {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.score-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.score-high { border-color: var(--green); color: var(--green); }
+.score-mid { border-color: var(--accent); color: var(--accent); }
+.score-low { border-color: var(--red); color: var(--red); }
+
+.stats-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.stat-chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stat-chip span { color: var(--muted); }
+.stat-chip strong { font-family: 'Sora', sans-serif; }
+
+.result-list-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.result-item {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.result-item.wrong-item {
+  border-color: rgba(248,81,73,0.35);
+  background: rgba(248,81,73,0.05);
+}
+.ri-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.5;
+}
+.ri-header:hover { background: rgba(255,255,255,0.03); }
+.ri-num {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-width: 22px;
+  flex-shrink: 0;
+}
+.ri-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.ri-stem {
+  color: var(--text);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ri-ans {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+  margin-right: 4px;
+}
+.ri-wrong-ans {
+  color: var(--red);
+  font-weight: 600;
+}
+.ri-arrow {
+  font-size: 0.7rem;
+  color: var(--muted);
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.result-item.open .ri-arrow { transform: rotate(180deg); }
+.ri-body {
+  display: none;
+  padding: 0 16px 14px 16px;
+  border-top: 1px solid var(--border);
+}
+.result-item.open .ri-body { display: block; }
+.ri-full-stem {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 10px;
+  margin-top: 12px;
+}
+.ri-options {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.ri-opt {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  line-height: 1.5;
+}
+.ri-opt.opt-correct { border-color: var(--green); background: rgba(63,185,80,0.08); color: var(--green); }
+.ri-opt.opt-wrong-chosen { border-color: var(--red); background: rgba(248,81,73,0.08); color: var(--red); }
+.ri-opt .opt-letter {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+.ri-explanation {
+  font-size: 0.83rem;
+  line-height: 1.7;
+  color: var(--muted);
+  border-left: 3px solid var(--border);
+  padding-left: 10px;
+}
+
+.action-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 28px;
+}
+.btn-action {
+  padding: 14px;
+  border-radius: 12px;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1.5px solid;
+  text-align: center;
+  line-height: 1.4;
+}
+.btn-action.primary {
+  background: linear-gradient(135deg, var(--accent), #e07b30);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(240,136,62,0.25);
+}
+.btn-action.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(240,136,62,0.35);
+}
+.btn-action.secondary {
+  background: var(--surface2);
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+.btn-action.secondary:hover {
+  background: rgba(88,166,255,0.1);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.screen { display: none; }
+.screen.active { display: block; animation: fadeUp 0.4s ease; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>✦ 國中會考英語文法複習</h1>
+    <p>歷屆試題值得你一刷再刷</p>
+  </div>
+
+  <!-- SETUP SCREEN -->
+  <div id="screen-setup" class="screen active">
+    <div class="card">
+      <div class="section-label">選擇主題</div>
+      <div class="topic-grid" id="topic-grid"></div>
+
+      <div class="section-label">練習題數</div>
+      <div class="count-row" id="count-row">
+        <button class="count-btn" data-count="5">5</button>
+        <button class="count-btn" data-count="10">10</button>
+        <button class="count-btn" data-count="15">15</button>
+        <button class="count-btn" data-count="20">20</button>
+      </div>
+
+      <button class="btn-start" id="btn-start" disabled>開始練習</button>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="screen-quiz" class="screen">
+    <div class="card">
+      <div class="quiz-meta">
+        <div class="progress-text" id="progress-text">第 1 / 10 題</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+      </div>
+      <div class="question-stem" id="question-stem"></div>
+      <div class="options-grid" id="options-grid"></div>
+      <div class="feedback-box" id="feedback-box">
+        <div class="feedback-title" id="feedback-title"></div>
+        <div class="feedback-answer" id="feedback-answer"></div>
+        <div class="feedback-explanation" id="feedback-explanation"></div>
+      </div>
+      <button class="btn-next" id="btn-next">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="screen-results" class="screen">
+    <div class="card">
+      <div class="result-header">
+        <div class="score-circle" id="score-circle">
+          <div class="score-pct" id="score-pct">--%</div>
+          <div class="score-label">答對率</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-chip"><span>⏱ 練習時間</span><strong id="stat-time">--</strong></div>
+          <div class="stat-chip"><span>✓ 答對</span><strong id="stat-correct">--</strong></div>
+          <div class="stat-chip"><span>✗ 答錯</span><strong id="stat-wrong">--</strong></div>
+        </div>
+      </div>
+      <div class="result-list-label">題目一覽 · 錯題優先</div>
+      <div id="result-list"></div>
+      <div class="action-btns">
+        <button class="btn-action secondary" id="btn-retry">🔁 再重新挑一次</button>
+        <button class="btn-action primary" id="btn-next-round">點我進入下一回合 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = {"topics":[{"id":1,"name":"主題1 時式","questions":[{"stem":"Ariel ___ every night for a week before her Chinese test and got a very good grade.","options":{"A":"studied","B":"studies","C":"has studied","D":"was going to study"},"answer":"A","explanation":"從整句時態可知，考試已經結束了，為了考試每晚念書的整個事件為過去事件，用過去簡單式，故選 (A)。"},{"stem":"The police haven't found the little girl who ___ at a supermarket. They'll keep doing all they can to find her.","options":{"A":"took away","B":"taken away","C":"has taken away","D":"was taken"},"answer":"D","explanation":"由「找小女孩」可推知她是「被帶走的」，用過去被動式「was＋過去分詞」，故選 (D)。"},{"stem":"Have you found a summer job yet? Mr. Firth ___ someone to take care of his kids during the vacation. Maybe you can talk to him.","options":{"A":"has looked for","B":"is looking for","C":"looks for","D":"was"},"answer":"B","explanation":"由後句建議對方可以去跟 Firth 先生聊聊，表示 Firth 先生是「正在找」可以照顧孩子的人選，故選 (B)。"},{"stem":"Yesterday when I got home from work, my brother ___ for dinner, so he invited me to join him.","options":{"A":"goes out","B":"went out","C":"has gone out","D":"was going out"},"answer":"D","explanation":"抵達家的時候，弟弟「正要去吃晚餐」，因此用過去進行式，故選 (D)。"},{"stem":"Aunt Gina has lived in this town for more than sixty years, so she ___ it very well.","options":{"A":"will know","B":"knew","C":"knows","D":"was going to know"},"answer":"C","explanation":"前句用現在完成式說明 Gina 住在鎮上超過 60 年，可推知她對鎮上很了解，為一現在事實，故選 (C)。"},{"stem":"Paul misses his parents a lot. He ___ them since he came to work in Taiwan a year ago.","options":{"A":"didn't see","B":"doesn't see","C":"hasn't seen","D":"won't see"},"answer":"C","explanation":"此處的 since 做連接詞，表「自從......」，句型為「現在完成式＋since＋過去簡單式」，故選 (C)。"},{"stem":"Listen! The baby ___ in the bedroom. Why don't you go in and take a look?","options":{"A":"cried","B":"cries","C":"is crying","D":"will cry"},"answer":"C","explanation":"關鍵字為 Listen!，要人傾聽，表示事情「現在正在進行」，故選 (C)。"},{"stem":"My sister is coming to my home today. She ___ with me for a week.","options":{"A":"stays","B":"stayed","C":"has stayed","D":"will stay"},"answer":"D","explanation":"「今日將會前來」，因此「將會」與我同住一週，故選 (D)。"},{"stem":"Mozart ___ his first music when he was only six years old.","options":{"A":"is writing","B":"has written","C":"will write","D":"wrote"},"answer":"D","explanation":"when 子句的時態為過去式｢當他只有六歲時」，可推知前面描述亦為當時的事件，也應用過去式，故選 (D)。。"},{"stem":"I don't have any money with me because I ___ my wallet this morning.","options":{"A":"had lost","B":"would lose","C":"lost","D":"was losing"},"answer":"C","explanation":"由「我身上沒有任何的錢」可知，我在今天早上弄丟了錢包，表達過去發生的事用過去式，故選 (C)。"},{"stem":"I ___ a bath when someone turned off the light. I was scared and shouted for help.","options":{"A":"was taking","B":"took","C":"am taking","D":"had taken"},"answer":"A","explanation":"由 when someone turned off the light（當某人關掉電燈）可知動作發生在過去，且為了強調動作的持續及正在進行，所以用過去進行式，故選 (A)。"},{"stem":"The medicine I ___ you this morning should be taken three times a day.","options":{"A":"to give","B":"given","C":"giving","D":"gave"},"answer":"D","explanation":"「給藥」的動作在今天早上已發生，故用過去式，故選 (D) gave。"},{"stem":"B&J Café ___ known as the tallest building in town. However, O&G Restaurant became the tallest building in 2010.","options":{"A":"has been","B":"had been","C":"is","D":"would be"},"answer":"B","explanation":"第二句出現過去時間點 2010 年。由上下文可知，第一句「B&J Café 成為城中最高建築」這件事情發生在第二句「O&G飯店成為（城中）最高建築」之前，須用過去完成式表示，故選 (B)。"},{"stem":"Nana：Did you mail the cards to your teachers? Annie：No, I want to check them again. I ___ them after dinner.","options":{"A":"mailed","B":"mail","C":"have mailed","D":"will mail"},"answer":"D","explanation":"晚餐過後才要把卡片寄出去，表示尚未做此動作，須用未來式描述即將發生的事情，故選 (D)。"},{"stem":"Abby：Too bad you couldn't come to the beach with us. It was so much fun there! You must come next time. Bree：No, thanks. I don't think ___ any fun. I can't swim.","options":{"A":"I was having","B":"I've had","C":"I have","D":"I'll have"},"answer":"D","explanation":"由 Bree 回應 No, thanks.（不，謝謝。），可知道她拒絕 Abby 邀約她下次去海邊玩的提議。本句用現在簡單式 I don't think... 則是因為本句話為她現在的想法，但因為「下次去玩」屬於尚未發生的事情，因此空格中應用未來式表示，故選 (D)。"},{"stem":"Alex：Why are you still here? It's almost eight o'clock. Tom：Because I ___ my work. Don't worry. It's almost done.","options":{"A":"wasn't finishing\\","B":"wouldn't finish\\","C":"haven't finished\\","D":"won't finish"},"answer":"C","explanation":"工作「尚未」做完，故用現在完成式 haven't finished。"},{"stem":"Candy has decided to move to Taipei next year. When she studies in an art school there, she ___ with her aunt for five months.","options":{"A":"lives","B":"has lived","C":"lived","D":"will live"},"answer":"D","explanation":"主要子句 she ___ with her aunt 描述未來將發生的事，When 引導的時間副詞子句雖用現在式（studies），但主句仍需用未來式 will live，故選 (D)。"},{"stem":"Mom：What ___ after school today? Ryan：Well, I just read some comic books.","options":{"A":"did you do","B":"do you do","C":"are you doing","D":"will you do"},"answer":"A","explanation":"Ryan 回答「我剛讀了漫畫書」，說明事情已發生在「今天放學後（after school today）」，這是過去時間點，故用過去式 did you do，選 (A)。"},{"stem":"Tommy is looking for the watch his uncle ___ him on his birthday.","options":{"A":"gives","B":"gave","C":"to give","D":"has given"},"answer":"B","explanation":"手錶是叔叔「在生日那天給他的」，表示已在過去發生的動作，用過去簡單式 gave，故選 (B)。"},{"stem":"Mom：Peter, be sure to finish your school report before you go to bed. Peter：OK, Mom, I ___.","options":{"A":"am","B":"do","C":"have","D":"will"},"answer":"D","explanation":"母親使用的是祈使句，可判斷 Peter 應該尚未完成報告，而 Peter 回答「好的」，即確認他的確尚未完成報告，故選 (D) 完成式的助動詞，表示 Peter同意「會」在交代的時間完成。"},{"stem":"Betty ___ fake watches when the police came.","options":{"A":"sells","B":"is selling","C":"was selling","D":"has sold"},"answer":"C","explanation":"when the police came（警察來的時候）為過去時間點，Betty「正在賣」假錶為當時持續進行的動作，用過去進行式 was selling，故選 (C)。"},{"stem":"Lisa：What ___ this morning? Tina：Well, it\\'s Sunday. I think I\\'ll go to church with my father.","options":{"A":"have you done","B":"are you going to do","C":"did you do","D":"were"},"answer":"B","explanation":"Tina 回答說今天是星期天，並表示她打算去教堂，因此問句是在問「今天早上打算做什麼」，為未來計畫，用 are you going to do，故選 (B)。"},{"stem":"Betty ___ TV when her little brother fell off the chair.","options":{"A":"watched","B":"was watching","C":"has watched","D":"is going to"},"answer":"B","explanation":"when her little brother fell off the chair（弟弟摔下椅子時）為過去時間點，Betty「正在看」電視，用過去進行式 was watching，故選 (B)。"},{"stem":"Jack：There is going to ___ a dance show on Saturday. Would you like to go with me? Nina：Sure, I can\\'t wait for it.","options":{"A":"be","B":"do","C":"get","D":"have"},"answer":"A","explanation":"There is going to be 是「there be」句型的未來式，表示「將有」，be 動詞不可換成 do/get/have，故選 (A)。"},{"stem":"The fishermen knew little about the island when they ___ there.","options":{"A":"arrived","B":"would arrive","C":"arrive","D":"have arrived"},"answer":"A","explanation":"由句s中動詞 knew 為過去簡單式，且句意在說明當漁夫們到達時，對島上所知甚少的事實，可知應選時態同為過去簡單式的 arrived；而選項 (B)、(C)、(D) 皆不是簡單過去式；故選 (A)。"},{"stem":"Mrs. Smith ___ the movie very much. She has seen it three times.","options":{"A":"liked","B":"likes","C":"has liked","D":"will like"},"answer":"B","explanation":"後句說她已看了三次，可知她「現在很喜歡」這部電影，為現在事實用現在簡單式 likes，故選 (B)。"},{"stem":"Ryan：Would you like to play tennis with me? Dara：No, thanks. ___ it for three hours already. I'm tired now.","options":{"A":"I play","B":"I'm playing","C":"I've played","D":"I'll play"},"answer":"C","explanation":"Dara 說「我已打了三個小時，現在很累」，用現在完成式表示從過去持續到現在的動作，故選 (C) I've played。"},{"stem":"Tina ___ hamburgers for lunch every day last week.","options":{"A":"has","B":"had","C":"has had","D":"was having"},"answer":"B","explanation":"Tina上禮拜每天都吃漢堡當午餐。句末的every day last week表示事情發生在過去，而且為一常態，所以動詞用過去簡單式即可，故選 (B)。"},{"stem":"Excuse me. I really need to go now. My kids ___ for me at school.","options":{"A":"are waiting","B":"were waiting","C":"wait","D":"waited"},"answer":"A","explanation":"關鍵字為 now，表達「現在」必須走，表示孩子們目前「正等著（are waiting）」他 / 她，故須選「現在進行式」。"},{"stem":"On Children's Day, Ms. Lee, a famous storybook writer, ___ to Molly's Bookstore to talk about her new book. My two little kids can't wait to see her.","options":{"A":"came","B":"was coming","C":"has come","D":"is going to come"},"answer":"D","explanation":"關鍵詞 can't wait to see her （等不及要見她）表示前述事情尚未發生，但即將發生，故選 (D)。"},{"stem":"We ___ Aunt Polly for a long time, so we visited her last weekend.","options":{"A":"don't see","B":"haven't seen","C":"hadn't seen","D":"wouldn't see"},"answer":"C","explanation":"拜訪 Polly 阿姨為上週己發生的事，而「我們很久沒有見到她」是比拜訪阿姨更早之前發生的事，應用「過去完成式」表達，故選 (C)。"},{"stem":"Lily：When will Uncle Tom come to see me? Mom：He'll visit us this weekend. He ___ me that by e-mail.","options":{"A":"told\\","B":"tells\\","C":"will tell\\","D":"was going to tell"},"answer":"A","explanation":"由母親的回答可之她已經知道湯姆叔叔何時要來，表示湯姆叔叔已經藉由電子郵件的方式告知她，故選 (A) 過去式動詞。"},{"stem":"See? The strange man I saw yesterday ___ around my house again. Should I call the police?","options":{"A":"walking","B":"is walking","C":"and walked","D":"to walk"},"answer":"B","explanation":"(who / that) I saw yesterday為形容詞子句，用來形容 The strange man，表「我昨天看到的那名陌生男子」；See? 為 Do you see that? 的簡述，表示說話者「當下」又看到那名陌生男子在他家附近遊蕩，因此須用「現在進行式」，故選 (B)。"},{"stem":"Sam: ___ you have a good time at Mr. Moore's house tonight? Tom: Yes. It was a wonderful party. I'm glad I went.","options":{"A":"Do","B":"Did","C":"Will","D":"Would"},"answer":"B","explanation":"Sam：今天晚上你在 Moore 先生家玩的愉快嗎？\\ Tom：是啊。那是個很棒的派對。我很高興我有去。根據 Tom 的回答可知，在 Moore 先生家的派對已經結束了，所以整個對話的時態應為過去簡單式，故答案選 (B)。"},{"stem":"No one thought James would appear at Katie's party. So when he ___, everyone was surprised and could not believe their eyes.","options":{"A":"would","B":"was","C":"had","D":"did"},"answer":"D","explanation":"when 用來引導兩件同時發生的事情。由上下文可知，when 引導的附屬子句缺過去簡單式動詞 appeared (at Katie's party)，寫作時為避免重複，可以過去簡單式助動詞 did 代替，故選 (D)。"},{"stem":"Peter ___ a trip to Yangmingshan and had a good time.","options":{"A":"takes","B":"took","C":"is taking","D":"will take"},"answer":"B","explanation":"句末 had a good time（玩得很開心）為過去式，可知整個事件是過去的旅遊，空格也應用過去式 took，故選 (B)。"},{"stem":"Tom ___ ten pounds over the past two months. He looks much thinner now.","options":{"A":"loses","B":"has lost","C":"will lose","D":"was losing"},"answer":"B","explanation":"over the past two months 表「過去到現在這兩個月期間內」，再從第二句 now 可判斷，前一句在講述「一件事情持續至今」，故選 (B)。"},{"stem":"The woman you met in the library yesterday ___ our school a lot of books.","options":{"A":"giving","B":"given","C":"to give","D":"will give"},"answer":"D","explanation":"空格需搭配先行詞 the woman，且描述「將捐書」的未來動作，故選 will give，選 (D)。"},{"stem":"*Smart Head*, one of the hottest TV programs these days, ___ people free plane tickets to Hawaii if they can answer 20 questions correctly in 15 minutes.","options":{"A":"have given","B":"gives","C":"giving","D":"to give"},"answer":"B","explanation":"逗號間的 one of the hottest TV programs these days 為同位格，真正的主詞為電視節目 *Smart Head*，故選描述事實的現在簡單式單數動詞 (B)。"},{"stem":"John：Have you seen my comic books, Jean? Jean：___ on your desk yesterday, but Mom took them away this morning.","options":{"A":"They are","B":"They had","C":"They were","D":"They\\'ve been"},"answer":"C","explanation":"Jean 說昨天看到書在桌上（yesterday），為過去事實，用過去式 They were，選 (C)。"},{"stem":"Tom：Jean, ___ to the movies with us tonight? Jean：Sorry, I can\\'t. I have an important exam tomorrow.","options":{"A":"did you go","B":"are you going","C":"have you gone","D":"do you go"},"answer":"B","explanation":"Tom 邀請 Jean 今晚一起去電影院，詢問計畫用 are you going to，表示「你打算去嗎？」，故選 (B)。"},{"stem":"The weather ___ rainy and cloudy in the last few days. I hope the sun will come out soon.","options":{"A":"has been","B":"had been","C":"will be","D":"would be"},"answer":"A","explanation":"關鍵詞為 in the last few days，「在過去幾天都」陰雨綿綿，因此會期望能快點放晴；描述「從過去持續到現在的狀況」，要用「現在完成式」，故選 (A)。"},{"stem":"Christine：Dad, I\\'m hungry. Do we have anything to eat? Mr. Chen：You can have some bread I ___ from the supermarket. It\\'s on the table.","options":{"A":"am buying","B":"to buy","C":"bought","D":"will buy"},"answer":"C","explanation":"「我從超市買來的麵包」，買麵包的動作已在過去完成，用過去簡單式 bought，故選 (C)。"},{"stem":"Stella is a baseball fan. She ___ more than one hundred pictures of famous baseball players.","options":{"A":"has","B":"has been","C":"is","D":"is having"},"answer":"A","explanation":"Stella 是棒球迷，她「擁有」超過一百張圖片，用現在簡單式 has 表示現在的狀態，故選 (A)。"},{"stem":"Alice：Have you ever been to a baseball game? Jamie：No, never. ___ Alice：Sure. Baseball is my favorite sport.","options":{"A":"Do you?","B":"Have you?","C":"Don't you","D":"Haven't you?"},"answer":"B","explanation":"Alice：你有沒有去看過棒球比賽？\\ Jamie：不，從來沒有。你呢？\\ Alice：當然有。棒球是我最愛的運動。\\ 根據第一句對話，可知詢問過去經驗使用現在完成式，故反問對方是否也有同樣經驗時也用現在完成式。"},{"stem":"She ___ to the department store and bought two new sweaters for her husband.","options":{"A":"has gone","B":"is going","C":"went","D":"goes"},"answer":"C","explanation":"and bought two new sweaters 為過去式，表明去百貨公司也是過去的動作，用過去式 went，故選 (C)。"},{"stem":"Andy：Did Mary ___ that square watch? Lucy：Yes, she just bought it.","options":{"A":"buy","B":"buys","C":"bought","D":"has bought"},"answer":"A","explanation":"Andy 用過去式 Did Mary ___ 提問，空格應填原形動詞 buy（搭配 Did），故選 (A)。"},{"stem":"My brother doesn't live with us. He ___ out after he got married.","options":{"A":"has moved","B":"will move","C":"was moving","D":"moved"},"answer":"D","explanation":"我哥哥不和我們住在一起。他結婚後就搬出去住了。第二句的時間子句中的時態為過去簡單式，故主要子句中的時態亦同。"},{"stem":"Mom: Linda, you've been playing computer games all evening! Have you finished your report? Linda: Well, ___ most of it this afternoon, and I'll finish it by Friday.","options":{"A":"I would do","B":"I did","C":"I was doing","D":"I'll do"},"answer":"B","explanation":"由 Linda 回應後半句「我週五前會完成報告」，推知今天下午已經完成大部分，應用過去簡單式，故選 (B)。"},{"stem":"I can't tell you what I think of the movie because I ___ it. I'll probably watch it this Saturday.","options":{"A":"am not seeing","B":"don't see","C":"haven't seen","D":"won't see"},"answer":"C","explanation":"由後句「可能這週六會看」，可知目前還沒看過，應用現在完成式表示至今尚未做的事，故選 (C)。"}]},{"id":2,"name":"主題2 be 動詞、助動詞","questions":[{"stem":"Our teacher Ms. Wu seldom laughs, but when she ___, everyone in the same building can hear her.","options":{"A":"can","B":"does","C":"has","D":"will"},"answer":"B","explanation":"助動詞的功用之一，是避免重複某一動詞；此處要避免重複的動詞為現在簡單式的 laughs，因此，助動詞要選現在簡單式第三人稱單數的 does，故選 (B)。"},{"stem":"___ the dog that bites people yours? You should keep it home.","options":{"A":"Can","B":"Does","C":"Has","D":"Is"},"answer":"D","explanation":"the dog 為第三人稱單數，需選用第三人稱單數 be 動詞 Is，故選 (D)。"},{"stem":"Ken's brothers like to watch tennis, but Ken ___. He is crazy about baseball.","options":{"A":"is","B":"isn't","C":"does","D":"doesn't"},"answer":"D","explanation":"由前半句的動詞 like 可知為現在簡單式，又連接詞 but 的前半句為肯定語氣，故後半句須為否定語氣，故選 (D)。"},{"stem":"Melody has a great interest in planting flowers, but her sister ___. She can't even stay in the garden for one minute.","options":{"A":"can't","B":"doesn't","C":"isn't","D":"won't"},"answer":"B","explanation":"本題考對等連接詞 but 的用法，前句「Melody 對種花很有興趣」為現在簡單式，故 but 所接的句子也應為現在簡單式，故選 (B)。"},{"stem":"Mom：Oh, no! Your sister forgot her sports shoes. When ___ she have PE class? Can you take the shoes to her school? Peter：It's in the afternoon. Don't worry. I'll bring them to her.","options":{"A":"did","B":"does","C":"has","D":"is"},"answer":"B","explanation":"由上下對話可知媽媽是在詢問 Peter 的姐姐何時有體育課，由上下語意可知時態為現在簡單式，又因 she 是第三人稱單數，故選 (B)。"},{"stem":"Becky：Do you like watching cooking programs on TV? Diana：No, I don\\'t, but my twin brother ___. He\\'s very fond of cooking.","options":{"A":"does","B":"do","C":"is","D":"are"},"answer":"A","explanation":"Diana 說不喜歡，但 but 後面表示她哥哥喜歡，用代動詞 does（代替 likes watching），故選 (A)。"},{"stem":"Jane：Did you get up early this morning? Tina：No, I didn\\'t, but my brother ___. He gets up early every day.","options":{"A":"does","B":"is","C":"did","D":"was"},"answer":"C","explanation":"Jane 說她沒有，but 後表示哥哥有（get up early），因前面是 Did 問句，代動詞用 did，故選 (C)。"},{"stem":"Allen：___ you have twenty minutes right now? I need to talk to you. Bruce：Sure! Come on in.","options":{"A":"Are","B":"Do","C":"Have","D":"Should"},"answer":"B","explanation":"句子問的是「你現在有二十分鐘嗎？」，have 當一般動詞（擁有時間），用 Do you have，故選 (B)。"},{"stem":"At first, my bookstore's business ___ not very good. But now it is doing quiet well.","options":{"A":"is","B":"does","C":"was","D":"did"},"answer":"C","explanation":"剛開始，我書局的生意不怎麼好，但是現在還不錯。此題在敘述事情的變化「剛開始......但現在......」。剛開始講的是過去的事，因此動詞須用過去式。又因good為形容詞，因此可知前面的動詞應為be動詞，因此答案選 (C)。"},{"stem":"Jane always does well on English test, but her sisters ___.","options":{"A":"doesn\\'t","B":"aren\\'t","C":"don\\'t","D":"didn\\'t"},"answer":"C","explanation":"主詞 her sisters 為複數，對應助動詞需用複數 don't，且 Jane 做好表示妹妹們「不做好」，故選 (C)。"},{"stem":"Frank read a comic book yesterday, but his brother ___.","options":{"A":"does","B":"doesn\\'t","C":"did","D":"didn\\'t"},"answer":"D","explanation":"前句 Frank read（過去式），but 後表示哥哥沒讀，代動詞需對應過去式否定 didn't，故選 (D)。"},{"stem":"Linda：Do you have to get up early in the morning? Peter：Yes, I ___. I can't be late for school.","options":{"A":"do","B":"can","C":"have","D":"am"},"answer":"A","explanation":"Linda 問的是 Do you have to...，Peter 回答 Yes，代動詞要對應 do，故選 (A)。"},{"stem":"Betty goes jogging every day in the park, and Allen ___, too.","options":{"A":"is","B":"does","C":"has","D":"was"},"answer":"B","explanation":"Betty 去慢跑（go jogging），Allen 也做同樣的事，代動詞代替 goes jogging 用 does，故選 (B)。"},{"stem":"Paul：___ Shelly's father a businessman? Carl：I don't think so. I remember he teaches English.","options":{"A":"Are","B":"Is","C":"Do","D":"Does"},"answer":"B","explanation":"主詞 Shelly's father 為第三人稱單數，且為 be 動詞問句，用 Is，故選 (B)。"},{"stem":"Ms. Wu：What animals ___ your sister like? Herbert：She likes lions and tigers.","options":{"A":"do","B":"does","C":"are","D":"is"},"answer":"B","explanation":"your sister 為第三人稱單數，一般動詞 like 的問句用 does，故選 (B)。"},{"stem":"Simon：Why ___ Jerry and Lisa play cards with us? Henry：Because they want to go to the movies.","options":{"A":"don\\'t","B":"isn\\'t","C":"aren\\'t","D":"doesn\\'t"},"answer":"A","explanation":"主詞 Jerry and Lisa 為複數，否定疑問句用 don't，故選 (A)。"},{"stem":"David：Have you seen John\\'s sister? Kevin：Yes, I ___. She\\'s the most beautiful girl I\\'ve ever seen.","options":{"A":"have","B":"had","C":"did","D":"saw"},"answer":"A","explanation":"Kevin 回答 Yes, I ___，此為現在完成式問句 Have you seen...，代動詞用 have，故選 (A)。"},{"stem":"Many of my classmates have had the experience of taking an airplane, but I ___.","options":{"A":"don't","B":"wasn't","C":"won't","D":"haven't"},"answer":"D","explanation":"前句 have had，but 後用現在完成式否定代動詞 haven't，表示「我還沒有過這個經驗」，故選 (D)。"},{"stem":"He ___ at home. He\\'s in his office now.","options":{"A":"isn\\'t","B":"can\\'t","C":"hasn\\'t","D":"doesn\\'t"},"answer":"A","explanation":"He's in his office 說明他在辦公室，表示他「不在」家，用 isn't，故選 (A)。"}]},{"id":3,"name":"主題3 被動式","questions":[{"stem":"The cellphones that ___ in that country are good but expensive.","options":{"A":"make","B":"are making","C":"have made","D":"are made"},"answer":"D","explanation":"that 為關係代名詞，在關係子句中指先行詞「手機」，而手機是「被製造」的，被動語態為「be 動詞＋過去分詞」，故選 (D)。"},{"stem":"Mr. Chen has a loud voice. His voice can ___ clearly even in that big classroom.","options":{"A":"hear","B":"be heard","C":"be hearing","D":"have heard"},"answer":"B","explanation":"can 後需接原形動詞，且聲音是「被聽到」，用被動式 be heard，故選 (B)。"},{"stem":"These pictures ___ when we took a trip to Kenting National Park.","options":{"A":"took","B":"will take","C":"were taken","D":"will be taken"},"answer":"C","explanation":"照片是「被拍的」，動作發生在過去旅遊時，用過去被動式 were taken，故選 (C)。"},{"stem":"A new road is going to ___ in town because traffic is getting busier and busier.","options":{"A":"build","B":"building","C":"be built","D":"have built"},"answer":"C","explanation":"be going to 後接原形，且道路是「被建造」，用被動 be built，故選 (C)。"},{"stem":"My dog Jimmy loves ___ with a comb. Every time I comb his hair, he will close his eyes and fall asleep.","options":{"A":"to brush","B":"brushing","C":"to be brushing","D":"being brushed"},"answer":"D","explanation":"雖然 love 之後可接動名詞（V-ing）或不定詞（to V），但第二句點出 Jimmy 是「被梳理的」，故選有被動式的 (D)。"},{"stem":"Alison doesn't like ___ what to do. She only does things she wants to do.","options":{"A":"told","B":"to tell","C":"be told","D":"to be told"},"answer":"D","explanation":"由後句可知，Alison 只做自己想做的事，可知她不喜歡「被告知」該做什麼，故用被動式 be told，而 like 後可接 to V，故選 (D)。"},{"stem":"Many famous people visit this restaurant. Popular singers like A-mei and Jay Chou ___ here with their friends.","options":{"A":"to be often seen","B":"often seen","C":"are often seen","D":"and"},"answer":"C","explanation":"like A-mei and Jay Chou 為 popular singers 的後位修飾，表示「像......」，因此本句缺動詞；而 seen 為 see 的過去分詞，句中要有 be 動詞來形成被動語態，表示「被看見」，故選 (C)。"},{"stem":"Susan：Oh, no! The door and the window ___! Victor：Who could have done this? Susan：Go in quickly and see if we\\'ve lost anything.","options":{"A":"are breaking","B":"have broken","C":"were broken","D":"will break"},"answer":"C","explanation":"門窗是「被打破的」，發現時已成既成事實，用現在完成被動或過去被動，此處選過去被動 were broken，故選 (C)。"},{"stem":"The housework in Mr. and Mrs. Wang's family ___ between them and their kids. Everyone's got their own job to do.","options":{"A":"is shared","B":"are shared","C":"shares","D":"share"},"answer":"A","explanation":"家事應該被分工，要用被動語態「be 動詞＋p.p.」，而主詞 The housework 為不可數名詞，故選 (A)。"}]},{"id":4,"name":"主題4 名詞、代名詞","questions":[{"stem":"Buses to the airport only come once every hour, and we just missed ___. Why don't we take a taxi?","options":{"A":"another","B":"it","C":"one","D":"them"},"answer":"C","explanation":"末句說「何不改搭計程車」，表示錯過了一班，用 one 來代稱其中但不特定的一班，故選 (C)。"},{"stem":"Nora：Can I check your drawer for some tools we can use? Matt：Sure. Take a look. See if you can find ___ in there.","options":{"A":"any","B":"it","C":"others","D":"those"},"answer":"A","explanation":"要找 some tools，即「未指定」工具，因此不會選有指定意思的 (B)、(C)、(D)。而 any 可做代名詞，故選 (A)。"},{"stem":"Tom：I need an eraser. Can I use yours? Judy：Sure. I'm not using ___ now.","options":{"A":"another","B":"each","C":"it","D":"yours"},"answer":"C","explanation":"Judy 的回答是指自己的橡皮擦，兩人都知道「說的是哪一個已指定物品」，故用 it 代指。"},{"stem":"I think ___ is more fun to go to the movies with my friends than with my family.","options":{"A":"that","B":"there","C":"one","D":"it"},"answer":"D","explanation":"我覺得跟朋友去看電影比跟家人去有趣多了。故選 (D)。"},{"stem":"Susan bought ___ bread in the supermarket, but she did not buy anything to drink.","options":{"A":"many","B":"some","C":"any","D":"one"},"answer":"B","explanation":"bread（麵包）為不可數名詞，只有選項 (B) 的 some 與選項 (C) 的 any 可與不可數名詞連用，而 some 通常用於肯定句，any 則用於否定句，故選 (B)。"},{"stem":"Mrs. Luo：Who put these socks in the refrigerator? Mr. Luo：I don't know. They're not ___. Ask your son.","options":{"A":"me","B":"mine","C":"my","D":"myself"},"answer":"B","explanation":"由上下文可推測，空格應指my shocks，當前面已提過同一事物時，可以用所有格代名詞代替，意思同於「所有格＋名詞」，因此故選 (B)。"},{"stem":"___ exercise after work is a good way for me to forget the troubles in the office.","options":{"A":"Playing","B":"Making","C":"Going","D":"Doing"},"answer":"D","explanation":"exercise 當名詞用時，動詞用 do 表示「做運動」，故選 (D)。"},{"stem":"___ of my sisters are older than I am. I'm the youngest of the three children in my family.","options":{"A":"Both","B":"Few","C":"Most","D":"Some"},"answer":"A","explanation":"由後句可知共有「三個孩子」，扣掉說話者本身，可知是其「兩位姐姐」，兩位的數量代名詞用 both，故選 (A)。"},{"stem":"My mom told me to take care of ___ in England. She worried that I couldn't eat or sleep well there.","options":{"A":"me","B":"myself","C":"her","D":"herself"},"answer":"B","explanation":"第一句補充說明第二句的內容。依句意，母親擔心說話者（第一人稱的 me、I）在英格蘭（there → England）無法吃好、睡好，可推斷母親是要說話者照顧好「說話者自己」，故選表第一人稱的反身代名詞 (B)。"},{"stem":"Kate：Earl, is that tall boy your brother? Earl：Yes, ___. Kate：But you two look so different!","options":{"A":"it is","B":"he is","C":"that is","D":"you are"},"answer":"B","explanation":"Kate 問的是 Earl 的兄弟（tall boy），Earl 回答「是的，他是（he is）」，用人稱代名詞 he，故選 (B)。"},{"stem":"___ of the books on the desk is about the famous writers of our country.","options":{"A":"A lot","B":"A few","C":"Both","D":"One"},"answer":"D","explanation":"空格後接單數動詞 is，需選單數代名詞，One of the books 意指「其中一本」，故選 (D) One。"},{"stem":"Ms. Johnson has been taking phone calls since she entered the office this morning. Just when she thought she could finally leave work, \\_\\_\\_\\_\\_ call came in.","options":{"A":"another","B":"each","C":"the next","D":"the other"},"answer":"A","explanation":"由句意可知，Johnson 女士到辦公室後就一直接到電話，而在以為終於可以離開時，又有電話打來了，表示「沒有指定的另一通電話」，應用 another，故選 (A)。"},{"stem":"The book under Mary's desk is ___, but I don't know why it is there.","options":{"A":"us","B":"me","C":"my","D":"mine"},"answer":"D","explanation":"由「在 Mary 的書桌下的那本書是『我的』」可知，空格須使用所有格代名詞 mine 代替前面所提過的名詞 book，故選 (D)。"},{"stem":"John and Susan gave ___ a nice jacket as a Christmas present.","options":{"A":"I","B":"me","C":"mine","D":"myself"},"answer":"B","explanation":"gave me 為動詞後的間接受詞，需用受格 me，故選 (B)。"},{"stem":"Andy：What do you think of these postcards? Lucy：Oh, I love ___. They\\'re beautiful.","options":{"A":"they","B":"them","C":"their","D":"theirs"},"answer":"B","explanation":"love 後接受詞，postcards 已提及用代名詞替代，受格複數用 them，故選 (B)。"},{"stem":"Yesterday was my daughter\\'s birthday. We took ___ to a restaurant and had a big dinner.","options":{"A":"me","B":"him","C":"her","D":"you"},"answer":"C","explanation":"took ___ to a restaurant，受詞代替 daughter（女兒），用受格 her，故選 (C)。"},{"stem":"My wife enjoys going to the movies with her friends, but I like to watch TV at home by ___.","options":{"A":"I","B":"me","C":"myself","D":"mine"},"answer":"C","explanation":"由 but 可知，對比妻子喜歡跟朋友一起看電影，說話者更喜歡「自己」在家看電視，應用反身代名詞 myself，故選 (C)。"},{"stem":"Sue：Your hat looks so comfortable! Ann：It's more than comfortable. If you wear a hat like ___, you won't feel cold on a windy day.","options":{"A":"I","B":"myself","C":"one","D":"this"},"answer":"D","explanation":"Ann 建議戴一頂「像這樣的帽子（one like this）」，this 指眼前這頂帽子，故選 (D)。"},{"stem":"I don't like any one of these three watches. Can you show me ___ one?","options":{"A":"the others","B":"other","C":"either","D":"another"},"answer":"D","explanation":"one ＝ a watch，代替前面「已提過、未指定」的單數可數名詞，而「other＋複數可數名詞」、「another＋單數可數名詞」，故選 (D)。"},{"stem":"There are many trees in the park. ___ of them are over fifty years old.","options":{"A":"Both","B":"Most","C":"Much","D":"One"},"answer":"B","explanation":"many trees 的樹中，「大部分」超過五十年，用 Most，故選 (B)。"},{"stem":"Elsa：Do you know anymore from Class A? Jeff：No, I don't know any of \\_\\_\\_\\_\\_.","options":{"A":"they","B":"their","C":"theirs","D":"them"},"answer":"D","explanation":"any of ___，後面需接受格，they 的受格是 them，故選 (D)。"},{"stem":"Mrs. Wang has two sons. ___ of them go to junior high school.","options":{"A":"One","B":"Both","C":"Some","D":"Many"},"answer":"B","explanation":"Wang 太太有「兩個」兒子，兩個都讀國中，用 Both（兩個都），故選 (B)。"},{"stem":"Paula：Is that big toy store Mr. and Mrs. Chen\\'s? Kelly：Yes, it\\'s ___. My daughter loves going there.","options":{"A":"his","B":"hers","C":"ours","D":"theirs"},"answer":"D","explanation":"問 Is it Mr. and Mrs. Chen's？答 Yes, it's ___，theirs 代替「他們的（店）」，故選 (D)。"},{"stem":"This restaurant makes delicious chicken rice, so ___ always full of people at mealtime.","options":{"A":"it is","B":"they are","C":"there is","D":"there are"},"answer":"A","explanation":"主詞是「這家餐廳（this restaurant）」，用單數 it is，故選 (A)。"},{"stem":"I was told to interview three guys at different times today. The first was on time. The second was late, and ___ never came.","options":{"A":"the last","B":"the only one","C":"some","D":"another"},"answer":"A","explanation":"四個選項分別為 (A)「最後一個（人）」、(B)「唯一的一個（人）」、(C)「有些（人）」、(D)「另一個（人）」。關鍵詞為第一句的「今天不同時段的三個人」，第二句則分別敘述這三個人的狀況，第一個準時到、第二個遲到，而第三個也是今天的最後一個未出現，故選 (A)。"},{"stem":"On the way to work, Natasha was surprised to find she was wearing a white earring on one ear and a gray earring on ___.","options":{"A":"another","B":"the next","C":"the other","D":"the second"},"answer":"C","explanation":"在 Natasha 上班途中，她很驚訝地發現她一隻耳朵戴白色的耳環，而「另一隻耳朵」戴灰色的耳環。要表達兩個當中剩下的那一個，須用代名詞 the other，故選 (C)。"},{"stem":"Tony：Will you go to Cindy's party tonight? Jane：No, I have to do my homework. Don't you have ___? Tony：Well, I already finished it at school.","options":{"A":"you","B":"your","C":"yours","D":"you're"},"answer":"C","explanation":"Tony：你今晚會不會去Cindy的派對？\\ Jane：不，我必須寫作業，你沒有作業嗎？\\ Tony：這個嘛，我在學校就寫完了。\\ 測驗所有格代名詞的用法，本題選yours，代表「你的作業」。"},{"stem":"Mike：I heard there are many monkeys in this mountain. But I didn't see any of them last time when I was here. Carl：Hope we can see ___ today.","options":{"A":"another","B":"others","C":"some","D":"themselves"},"answer":"C","explanation":"希望今天能看到猴子，用 some（一些），表期待看到幾隻，故選 (C)。"},{"stem":"Mary got two dolls from her grandfather on her birthday, and she liked ___ very much.","options":{"A":"her","B":"it","C":"ones","D":"them"},"answer":"D","explanation":"she liked ___ very much，受詞代替 two dolls（複數），用 them，故選 (D)。"},{"stem":"I don't think Katie will read any one of the books you've picked out for her: ___ look(s) very boring.","options":{"A":"it","B":"one","C":"some","D":"they"},"answer":"D","explanation":"you've picked out for her 為形容詞子句，省略了當受格的關係代名詞 that / which，所以 the books 為 picked out 的受詞，意思為「你為她選的書」，而「書」為複數，故選 (D)，表示 Katie不會讀你為她選的書，因為「它們」都很無聊。any one of 在此的功用是加強語氣。"},{"stem":"Tina：The bread looks delicious! You want to buy some? Carl：I\\'d love to, but I don\\'t have ___ money with me now.","options":{"A":"no","B":"all","C":"any","D":"some"},"answer":"C","explanation":"否定句中表示「任何...都沒有」用 any，I don't have any money，故選 (C)。"},{"stem":"Elise：I need a dress for tomorrow's party, but I don't have one. Fiona：Why don't you try on my red one? I bought ___ last week.","options":{"A":"it","B":"one","C":"ones","D":"them"},"answer":"A","explanation":"由前句 Why don't you try on my red one?（你何不試試我那件紅色的？）和上句 Elise 說 I need a dress\\...（我需要一件洋裝......），可知空格應是指 Fiona 上週買的「那件紅色的洋裝」，故用 it 代替，故選 (A)。"},{"stem":"I haven't been to the movies these days. Are there any good ___ this week?","options":{"A":"ones","B":"others","C":"them","D":"those"},"answer":"A","explanation":"由前句提到 I haven't been to the movies these days.（我這陣子都沒有去看電影。），可知說話者應是想詢問「這禮拜有任何不錯的（電影）嗎？」，ones 是代替前面提過但未特別限定的名詞，而在本句中是不限定的用法，故選 ones，選 (A)。"},{"stem":"Gary：I can't find my pen. Nina：Is the one on Jack's desk ___? Gary：Yes, thank you.","options":{"A":"mine","B":"ours","C":"theirs","D":"yours"},"answer":"D","explanation":"yours 是 your 的所有格代名詞，故選 (D)。"},{"stem":"Alice: This cake is so delicious! Where did you buy it? Oscar: I didn't buy it. I made it ___!","options":{"A":"for me","B":"to me","C":"mine","D":"myself"},"answer":"D","explanation":"本題為測驗人稱代名詞的概念。依據題意，蛋糕是「自己做的」，應選反身代名詞 (D) myself。"},{"stem":"My grandfather spends ___ of his free time reading newspapers.","options":{"A":"one","B":"both","C":"most","D":"many"},"answer":"C","explanation":"most of his free time 表示「大部分的空閒時間」，most 修飾不可數名詞 time，故選 (C)。"},{"stem":"Jenny's bag is very heavy because ___ filled with toy cars.","options":{"A":"it is","B":"they are","C":"there is","D":"there are"},"answer":"A","explanation":"依句子結構，because 引導的副詞子句缺主詞，故不會選形成存在句的 (C) 或 (D)；依句意，Jenny 的「袋子」會沉重的原因是因為「袋子」裡塞滿了玩具車，而 Jenny 的「袋子 (bag)」為單數，故選 (A)，讓 it 代替前面提到過的 Jenny's bag。"},{"stem":"Philip：Is that red car Miss Brown\\'s? Walter：Yes, it\\'s ___. Beautiful, isn\\'t it?","options":{"A":"hers","B":"his","C":"ours","D":"theirs"},"answer":"A","explanation":"問 Is it Miss Brown's？答 Yes, it's ___，Miss Brown 為女性，所有格代名詞用 hers，故選 (A)。"},{"stem":"Cell phones are convenient; every person in my family has ___.","options":{"A":"it","B":"one","C":"them","D":"those"},"answer":"B","explanation":"every person 每個人都有「一支」手機，用 one 代替單數名詞 a cell phone，故選 (B)。"},{"stem":"Nana and Fred are good friends, and ___ are baseball fans.","options":{"A":"all of them","B":"both of them","C":"some of them","D":"one of them"},"answer":"B","explanation":"Nana and Fred 兩人都是棒球迷，用 both of them，故選 (B)。"},{"stem":"Spring is a wonderful season because ___ is usually warm and sunny.","options":{"A":"which","B":"this","C":"one","D":"it"},"answer":"D","explanation":"春天是一個美好的季節，因為它通常溫暖且晴朗。(A) 哪一個 (B) 這 (C) 一個 (D) 它。主要子句描述春天是一個美好的季節，because副詞子句說明春天天氣通常溫暖且晴朗。在英文中以it代替天氣，故答案選(D)。"},{"stem":"Beatrice loves to draw apples. You can see ___ in her notebooks, on her letters, and even on her school bag!","options":{"A":"one","B":"others","C":"them","D":"which"},"answer":"C","explanation":"由前句提到 Beatrice loves to draw apples.（Beatrice 喜歡畫蘋果。）可知，下句表達可以在她的筆記本、在她的信裡，甚至在她的書包上可以看到「它們」，故選 (C)。"},{"stem":"___ of the students in my school do not have the experience of going to a foreign country. Only a few do.","options":{"A":"Any","B":"Both","C":"Most","D":"One"},"answer":"C","explanation":"後句說 only a few do（只有少數有出國），可知大部分沒有，用 Most，故選 (C)。"},{"stem":"It almost killed Kevin to take care of his baby sister for one afternoon. He wondered how his mom could do ___ every day.","options":{"A":"her","B":"it","C":"one","D":"them"},"answer":"B","explanation":"本題考代名詞，用以代替之前提過的人、事或物。此處則是代替上一句提過的「照顧妹妹」這件「事」，要用單數代名詞 it，故選 (B)。"},{"stem":"I want to find another dentist because ___ pulled out a good tooth last time I went to him.","options":{"A":"I","B":"me","C":"mine","D":"myself"},"answer":"C","explanation":"本句用所有格代名詞「mine」表「my dentist（我的牙醫）」，故選 (C)。"},{"stem":"Chris loves walking with Anna on snowy days, but Anna hates ___ very much.","options":{"A":"them","B":"so","C":"one","D":"it"},"answer":"D","explanation":"本句用代名詞 it 代替前句提到「下雪天去散步」這件事，故選 (D)。"}]},{"id":5,"name":"主題5 動詞","questions":[{"stem":"I did not do my homework, so my teacher said I ___ stay after school to finish it.","options":{"A":"failed to","B":"had to","C":"hoped to","D":"used to"},"answer":"B","explanation":"沒有做功課，老師應會說「必須」放學後留下來完成，故選 (B)。"},{"stem":"The pie at your party ___ good. Where did you buy it?","options":{"A":"ate","B":"bit","C":"made","D":"tasted"},"answer":"D","explanation":"你宴會上的派「嚐起來」很美味。你在哪裡買的？故選 (D)。"},{"stem":"The students got ___ when they saw their favorite movie star eating at the next table.","options":{"A":"excited","B":"excitedly","C":"exciting","D":"excitingly"},"answer":"A","explanation":"get 為連綴動詞，後接形容詞作補語，表示「變得興奮」用 excited（形容詞），故選 (A)。"},{"stem":"If I finish my homework before eight o'clock, my parents will let me ___ TV for one hour.","options":{"A":"watch","B":"watching","C":"to watch","D":"have watched"},"answer":"A","explanation":"let 為使役動詞，後接受詞再接原形動詞（let + O + V），故用 watch，選 (A)。"},{"stem":"There\\'s a subway station near my house. ___ takes me only ten minutes to get to my office.","options":{"A":"It","B":"There","C":"The one","D":"The station"},"answer":"A","explanation":"It takes me... 為固定句型「花某人...時間」，It 為虛主詞代替後面的不定詞片語，故選 (A)。"},{"stem":"Jenny plays the piano very well. Her mother makes her ___ two hours every day.","options":{"A":"practice","B":"practiced","C":"practicing","D":"to practice"},"answer":"A","explanation":"make 為使役動詞，後接受詞再接原形動詞（make + O + V），故用 practice，選 (A)。"},{"stem":"Cindy cried out when she saw a motorcycle ___ into her cat.","options":{"A":"bump","B":"bumped","C":"to bump","D":"has bumped"},"answer":"A","explanation":"would you like me to help，此題主詞為 asking questions（動名詞，單數），動詞應為 helps，選 (A)。"},{"stem":"Mrs. Wilson ___ her son wash the dishes after dinner.","options":{"A":"had","B":"told","C":"wanted","D":"invited"},"answer":"A","explanation":"sense + for sb. + to V 句型，「對某人來說做某事是重要的」，It was important for Kevin to finish，用不定詞，故選 (B)。"},{"stem":"Bruce：When did Roger change his job? Laura：He hasn\\'t changed his job. He still works in the same computer store. Bruce：But I saw him ___ watches on the street corner.","options":{"A":"sold","B":"to sell","C":"have sold","D":"selling"},"answer":"D","explanation":"動名詞 Playing 作主詞，視為單數，動詞用 is，故選 (A)。"},{"stem":"The teachers make us ___ harder by giving us tests.","options":{"A":"study","B":"studied","C":"to study","D":"studying"},"answer":"A","explanation":"tell sb. not to V 為固定用法，表示「告訴某人不要做某事」，故選 (D) to study。"},{"stem":"The little boy jumped up and down happily when he saw a bee ___ into the house.","options":{"A":"flown","B":"to fly","C":"flying","D":"has flown"},"answer":"C","explanation":"make 使役動詞後接原形動詞，make me finish，故選 (A)。"},{"stem":"Studying in a foreign country ___ me a lot of money. That's why I had to sell my apartment.","options":{"A":"cost","B":"lost","C":"made","D":"spent"},"answer":"A","explanation":"動名詞片語 Previewing the lesson 作主詞，表示「預習功課」這個行為，用 Previewing，故選 (D)。"},{"stem":"It took the police lots of time ___ who entered Liu's house and killed her one year ago.","options":{"A":"and found out","B":"find out","C":"finding out","D":"to find out"},"answer":"D","explanation":"It takes / took＋人＋時間＋to V，表示「某事花了某人多少時間」，故選 (D)。"},{"stem":"When I was walking along the river, I saw some fish ___ out of the water.","options":{"A":"jumped","B":"to jump","C":"jumping","D":"are jumping"},"answer":"C","explanation":"主詞需要動名詞形式 getting up（早起這件事），後接形容詞補語 is difficult，故選 (D)。"},{"stem":"Mike：When did Laura become a taxi driver? Jerry：She is NOT a taxi driver. She\\'s a nurse. Mike：But I saw her ___ a taxi yesterday! Jerry：Oh, maybe it was her younger sister!","options":{"A":"driving","B":"drove","C":"to drive","D":"have driven"},"answer":"A","explanation":"see sb. + V-ing 表示「看到某人正在做某事」，Mike 看到她「正在開」計程車，故用現在分詞 driving，選 (A)。"},{"stem":"Dennis enjoys ___ in public. He is proud of his beautiful voice.","options":{"A":"dancing","B":"drawing","C":"shopping","D":"singing"},"answer":"D","explanation":"enjoy 後接動名詞（enjoy + V-ing），Dennis 喜歡「在公眾面前唱歌（singing）」，因為他以自己的美聲為榮，故選 (D) singing。"},{"stem":"People got very excited when they watched Ms. Smith ___ at the party.","options":{"A":"danced","B":"dancing","C":"has danced","D":"to dance"},"answer":"B","explanation":"watch sb. + V-ing 表示「看著某人（正在）做某事」，人們看著 Ms. Smith「正在跳舞」，用現在分詞 dancing，故選 (B)。"}]},{"id":6,"name":"主題6 不定詞、動名詞、分詞、虛主詞 it","questions":[{"stem":"Although it took me lots of time ___ a big meal for ten people, I was happy that everyone enjoyed it.","options":{"A":"prepare","B":"to prepare","C":"preparing","D":"prepared"},"answer":"B","explanation":"花費動詞 take（花......時間）後方動詞用不定詞to＋V，故選 (B)。"},{"stem":"Playing sports at least three times a week ___ good for your health.","options":{"A":"is","B":"are","C":"has","D":"have"},"answer":"A","explanation":"動名詞（Playing\\...）當主詞表單數，而空格後為形容詞片語 good for（對......好），故空格應填入表單數的 be 動詞，故選 (A)。"},{"stem":"The most convenient way to get around this small town is ___ a bike.","options":{"A":"to ride","B":"to have ridden","C":"rides","D":"rode"},"answer":"A","explanation":"不定詞片語可當主詞補語，其位置放在 be 動詞之後。本題翻譯為「逛這個小鎮最方便的方法是騎腳踏車。」，故選 (A)。"},{"stem":"___ in the daytime is not good for you. You may not sleep well at night and feel tired the next day.","options":{"A":"Slept","B":"Sleeps","C":"Have slept","D":"Sleeping"},"answer":"D","explanation":"由句中有 be 動詞 is 可知本句不是祈使句，所以不能選原形動詞，應使用能當主詞的動名詞，故選 (D)。"},{"stem":"I usually carry a camera on my trips; taking pictures ___ a good way for me to remember the experience.","options":{"A":"to be","B":"is","C":"being","D":"are"},"answer":"B","explanation":"動名詞當主詞視為單數，且句中無動詞，故需使用 be 動詞 is，故選 (B)。"},{"stem":"Learning foreign languages ___ me to know more about other countries.","options":{"A":"helps","B":"helping","C":"help","D":"to help"},"answer":"A","explanation":"asking questions 作主詞（動名詞片語視為單數），動詞應接第三人稱單數 helps，故選 (A)。"},{"stem":"Asking questions ___ Henna learn more and better.","options":{"A":"help","B":"helps","C":"helping","D":"to help"},"answer":"B","explanation":"主詞 Asking questions 為動名詞片語視為單數，動詞用 helps，故選 (B)。"},{"stem":"It was important for Kevin ___ his homework quickly because he had to help his parents sell fruit in the night market.","options":{"A":"finish","B":"to finish","C":"finishes","D":"finished"},"answer":"B","explanation":"It was important for Kevin to finish，it 為虛主詞，真正主詞為 to finish，用不定詞，故選 (B)。"},{"stem":"Playing in the water ___ lots of fun on a hot summer day.","options":{"A":"is","B":"are","C":"has","D":"have"},"answer":"A","explanation":"動名詞 Playing 作主詞，視為單數，搭配 is，故選 (A)。"},{"stem":"Dad always tells me not ___ only for tests. If that's all I'm doing, he says, I will soon lose interest in learning.","options":{"A":"study","B":"studying","C":"studied","D":"to study"},"answer":"D","explanation":"tell sb. not to V 固定用法，「告訴我不要只為考試讀書」，用 to study，故選 (D)。"},{"stem":"Mother makes me ___ my homework every day before I can play video games.","options":{"A":"finish","B":"finished","C":"finishing","D":"to finish"},"answer":"A","explanation":"make 使役動詞後接原形動詞，make me finish，故選 (A)。"},{"stem":"___ the lesson before class gives me a better idea about what the teacher is going to teach.","options":{"A":"Preview","B":"Previews","C":"Previewed","D":"Previewing"},"answer":"D","explanation":"句首需動名詞作主詞，Previewing the lesson 表示「預習課文」，故選 (D)。"},{"stem":"Playing games on the cellphone ___ popular with high school students.","options":{"A":"is","B":"are","C":"being","D":"to be"},"answer":"A","explanation":"主詞為動名詞片語「用手機玩遊戲」，故動詞應選配合第三人稱單數的 be 動詞 is，故選 (A)。"},{"stem":"John always goes to bed late at night, so ___ early is difficult for him.","options":{"A":"get up","B":"got up","C":"gets up","D":"getting up"},"answer":"D","explanation":"主詞位置需動名詞 getting up（早起），表示「早起對他來說很困難」，故選 (D)。"},{"stem":"Watching American movies ___ one of the activities we enjoy most in our English class.","options":{"A":"is","B":"are","C":"to be","D":"being"},"answer":"A","explanation":"動名詞 Watching 作主詞（單數），動詞用 is，故選 (A)。"},{"stem":"The little boy often asks his father ___ candies and cookies for him.","options":{"A":"buy","B":"buys","C":"buying","D":"to buy"},"answer":"D","explanation":"ask 後接動詞時，用不定詞 to V 的形式，故選 (D)。"}]},{"id":7,"name":"主題7 形容詞","questions":[{"stem":"You were ___ not to lend Amy money. She never gives back what she borrows.","options":{"A":"crazy","B":"helpful","C":"wise","D":"wrong"},"answer":"C","explanation":"Amy 從來不歸還借的東西，可推知「不借她任何錢」是「明智的」，故選 (C)。"},{"stem":"Don't let the children swim in the river. We don't know how ___ it is. It could be dangerous.","options":{"A":"deep","B":"far","C":"long","D":"thick"},"answer":"A","explanation":"不要讓孩子們在河裡游泳，後句又說可能很危險，可推知是不知道河有多「深」，故選 (A)。"},{"stem":"It was ___ for us to answer the math question because we've done the same kind of questions many times.","options":{"A":"common","B":"easy","C":"safe","D":"special"},"answer":"B","explanation":"因為已經做過同樣類型的題目很多次，要再作答應該是「容易的」，故選 (B)。"},{"stem":"Pam is a ___ baseball player; she has more fans than any other player on her team.","options":{"A":"boring","B":"heavy","C":"popular","D":"rich"},"answer":"C","explanation":"由後方描述可知 Pam 擁有比任何隊上球員都要多的粉絲，表示她很「受歡迎」，故選 (C)。"},{"stem":"Bob is ___ of the boys in the family. He never does any housework. His brothers at least take out the garbage sometimes.","options":{"A":"lazier","B":"the lazy","C":"the lazier","D":"the laziest"},"answer":"D","explanation":"由後句說明可知 Bob 從不做任何家事，且由比較範圍 of the boys in the family（家庭裡的所有男孩），可知 Bob 是最懶惰的，應用最高級，故選 (D)。"},{"stem":"After the fire, everyone in the apartment was ___ when they cooked. They did not want any people to be hurt again.","options":{"A":"more carefully","B":"more careful","C":"the most careful","D":"the"},"answer":"B","explanation":"由 be 動詞 was 可知應用形容詞 careful，且由「在那場火災之後」，語意上是表達「比以前」小心，故用比較級 more careful。"},{"stem":"My sister thinks red hair is ___ fashionable than black hair.","options":{"A":"very","B":"much","C":"more","D":"the most"},"answer":"C","explanation":"兩者比較用比較級，fashionable 的比較級為 more fashionable，故選 (C)。"},{"stem":"This restaurant sells the best steak in Taipei; you can't find ___ steak in the city.","options":{"A":"delicious","B":"more delicious","C":"the most delicious","D":"deliciously"},"answer":"B","explanation":"由 the best steak in Taipei（臺北最好的牛排）可知，在這裡無法找到「更好吃」的牛排，故選 (B)。"},{"stem":"The jacket is ___ than the dress or the pants.","options":{"A":"expensive","B":"very expensive","C":"more expensive","D":"the most"},"answer":"C","explanation":"比較三者（jacket、dress、pants），jacket 最貴，但句型是 ___ than，為兩者比較，故用比較級 more expensive，選 (C)。"},{"stem":"Lucy looks ___ in pants than in dress.","options":{"A":"pretty","B":"prettily","C":"prettier","D":"the prettiest"},"answer":"C","explanation":"Lucy 穿褲子看起來比穿裙子好看。由題目中的 than（比......更......）可知答案應選比較級 prettier（較漂亮的）。"},{"stem":"For Mike, the price is \\_\\_\\_\\_\\_ important thing when he shops for jeans. He cares even more about the shape and the size of the pockets.","options":{"A":"the more","B":"the most","C":"the less","D":"the least"},"answer":"D","explanation":"由後句提到 Mike 甚至更在意牛仔褲的口袋形狀跟大小，可知價錢對他而言，是「最不」重要的，故選 (D)。"},{"stem":"The singer sings beautifully. I cannot think of anyone with a ___ voice.","options":{"A":"best","B":"better","C":"more","D":"most"},"answer":"B","explanation":"找不到比她更好的聲音，比較級 better 表示「更好的」，cannot think of anyone with a better voice，故選 (B)。"},{"stem":"There are five stories in this book. The one about a shy police officer is the most ___ to me.","options":{"A":"interest","B":"interested","C":"interesting","D":"interestingly"},"answer":"C","explanation":"故事「對我來說最有趣」，interesting 修飾故事本身，用 interesting（主動），最高級前有 the most，故選 (C)。"},{"stem":"In this five-person game, the one who finds ___ hidden balls will win the last free ticket for the movie *A Born Player*.","options":{"A":"many","B":"some","C":"the more","D":"the most"},"answer":"D","explanation":"在這場五人競賽中，找到「最多」被藏起來的球的那個人，將可贏到最後免費的電影票。因為電影票只有一張，所以用最高級表示獲勝者的資格。故選 (D)。"},{"stem":"When Sean came to Taiwan several years ago, ___ people knew about him. But now he is a famous cook in Taiwan.","options":{"A":"any","B":"few","C":"little","D":"most"},"answer":"B","explanation":"few 修飾可數名詞複數（people），表示「很少人認識他」，故選 (B) few。"},{"stem":"___ other waiters in the restaurant have worked here longer than Clark; only Lois and Lana started working here before him.","options":{"A":"All","B":"Most","C":"Some","D":"Few"},"answer":"D","explanation":"分號後一句用於補充說明分號前一句的意思。而分號後一句的 him 指前句提到的 Clark；因此，後句在表達只有 Lois 與 Lana 兩人「早於 Clark」在此餐廳工作。所以，前句是說：這餐廳裡「很少數」人「比 Clark 年資久」，故選 (D)。"},{"stem":"Elsa：Did Eric buy any vegetables in the market? Bob：No, he didn\\'t, but he bought ___ fish.","options":{"A":"no","B":"any","C":"some","D":"both"},"answer":"C","explanation":"肯定句中 some 表示「一些」，用於建議、提供，Eric 買了「一些」魚，故選 (C)。"},{"stem":"Business at Jane's shop has not been good these days. And the new supermarket across the street only makes things ___.","options":{"A":"easier","B":"worse","C":"more boring","D":"more convenient"},"answer":"B","explanation":"由前句「這些日子生意本來就不好了」，可推知對面新開的超級市場只會讓事情變得「更糟」；worse 為 bad 的比較級，故選 (B)。"}]},{"id":8,"name":"主題8 介系詞","questions":[{"stem":"___ the map that Ryan had drawn for us, we were able to find this beautiful old church.","options":{"A":"About","B":"Beside","C":"Under","D":"With"},"answer":"D","explanation":"句意為「有 Ryan 畫給我們的地圖，才能......」，應用介系詞 with 表「有......」。"},{"stem":"The temple sits alone in the mountains at a height of 3,000m ___ sea level.","options":{"A":"above","B":"at","C":"below","D":"in"},"answer":"A","explanation":"由高度 3,000 公尺，推知寺廟位於海平面之「上」，故選 (A)。"},{"stem":"Beverly eats lots of snacks ___ meals. That's why she is often too full to eat anything at mealtimes.","options":{"A":"after","B":"between","C":"during","D":"from"},"answer":"B","explanation":"正餐時吃不下東西，表示 Beverly 在餐與餐「之間」吃太多零食，故選 (B)。"},{"stem":"Look at the picture. The cat is sleeping ___ the box. ![](media/image2.jpeg){width=\"1.6256944444444446in\" height=\"1.0159722222222223in\"}","options":{"A":"behind","B":"beside","C":"inside","D":"under"},"answer":"C","explanation":"從圖片可知貓在盒子裡面睡覺，inside 表示「在...裡面」，故選 (C)。"},{"stem":"My dog, Lucy, was lying on the sofa ___ the fan on the wall. So when the fan fell, she was hit right on the head.","options":{"A":"under","B":"off","C":"from","D":"down"},"answer":"A","explanation":"由後句「Lucy 被從牆上掉落的電風扇打到頭」，可知 Lucy 的位置應在電風扇的「下方」。故選 (A) under（在......下方），表示 Lucy 當時趴在沙發上，而位置是在牆上的電風扇下方。"},{"stem":"Lucy and her boyfriend, Daniel, came to Taiwan ___ July 10, 1999.","options":{"A":"at","B":"in","C":"with","D":"on"},"answer":"D","explanation":"具體日期「7月10日」前用介系詞 on，故選 (D)。"},{"stem":"I write down everything about work in my pink notebook; ___ it, I'd forget the things I should do.","options":{"A":"before","B":"except","C":"outside","D":"without"},"answer":"D","explanation":"without 表示「沒有它的話」，without my notebook 我就會忘事，故選 (D)。"},{"stem":"Everyone in the class enjoys playing chess ___ Bill; he thinks the game is boring.","options":{"A":"except","B":"for","C":"like","D":"of"},"answer":"A","explanation":"分號後面的 he 代表分號前句中所提到的 Bill。既然 Bill「覺得下棋的遊戲無聊」，可推斷分號前方句子的意思是：「除了」Bill 之外，其他人都喜歡下棋，故選 (A)。"},{"stem":"I love sports and enjoy playing baseball with friends ___ the school team.","options":{"A":"about","B":"at","C":"on","D":"to"},"answer":"C","explanation":"on the school team 為固定用法，表示「在學校隊伍裡」，故選 (C)。"},{"stem":"Mr. Yang has worked in this factory ___ 1968.","options":{"A":"before","B":"for","C":"in","D":"since"},"answer":"D","explanation":"自從1968年起，楊先生就在這個工廠工作了。句子中如有「since＋時間」表示「某件事自從某個時間開始發生」；句子中的動詞時態應為完成式，故正確答案為 (D)。"},{"stem":"Tina is getting married to a man she has known only ___ a month.","options":{"A":"for","B":"in","C":"on","D":"since"},"answer":"A","explanation":"for 接一段時間，表示「持續了一個月」，for a month，故選 (A)。"},{"stem":"Judy moved to France and has lived there ___ two years. I miss her very much.","options":{"A":"before","B":"for","C":"in","D":"since"},"answer":"B","explanation":"for 接時間長度，「住了兩年」用 for two years，故選 (B)。"}]},{"id":9,"name":"主題9 副詞","questions":[{"stem":"Bill：Have you ever been to Hong Kong? Ted：Yes, ___. It\\'s really a fun place to go.","options":{"A":"five days","B":"for three years","C":"in one month","D":"twice"},"answer":"D","explanation":"Have you ever been 問的是次數或經驗，Ted 回答 twice（兩次），故選 (D)。"},{"stem":"Joe：How often does your brother wash his car? Bob：___.","options":{"A":"Since yesterday.","B":"Two days ago.","C":"One hour.","D":"Every"},"answer":"D","explanation":"How often 問的是頻率，答案需是頻率副詞，Every（天）是頻率答法，故選 (D)。"},{"stem":"Alice：How often do you wash your hair? Betty：___.","options":{"A":"One day","B":"Twice a week","C":"Since yesterday","D":"Three days"},"answer":"B","explanation":"How often 問洗頭頻率，Twice a week（每週兩次）為頻率表達，故選 (B)。"},{"stem":"Simon is an interesting person. He gets excited ___.","options":{"A":"easy","B":"easier","C":"easily","D":"easiest"},"answer":"C","explanation":"gets excited 為動詞片語，修飾動詞用副詞 easily，故選 (C)。"},{"stem":"George：___ do you practice playing the piano? Tommy：When my mom is at home, I have to practice EVERY DAY, but she\\'s away on a business this week!","options":{"A":"How about","B":"How long","C":"How much","D":"How often"},"answer":"D","explanation":"How often 問的是頻率（多久一次），問練鋼琴的頻率，故選 (D)。"},{"stem":"All the packages are ___ checked at the airport to keep everyone safe.","options":{"A":"careful","B":"carefully","C":"more careful","D":"the most careful"},"answer":"B","explanation":"機場內所有的包裹都被仔細地檢查，以確保乘客的安全。本題測驗副詞修飾動詞的用法。"},{"stem":"Have you got anything for Joe ___? He'd be happy to get your gift on his birthday.","options":{"A":"almost","B":"either","C":"soon","D":"yet"},"answer":"D","explanation":"完成式的句子中，常用副詞 already 與 yet 來表達已經完成或尚未完成的動作，而 yet 常用於疑問句表示「已經」或否定句表示「尚未」，故選 (D)。"},{"stem":"Allen：George looks strong. Has he ever been sick? Doris：He\\'s a superman! He ___ goes to the doctor.","options":{"A":"already","B":"even","C":"often","D":"seldom"},"answer":"D","explanation":"Doris 說他是超人，幾乎不去看醫生，seldom（很少）表示低頻率，故選 (D)。"},{"stem":"Amy: Would you like some coffee? Bill: No, thanks. I ___ drink coffee. Coffee hurts my stomach.","options":{"A":"almost","B":"already","C":"seldom","D":"still"},"answer":"C","explanation":"咖啡傷胃，所以「很少」喝咖啡，seldom 表低頻率，故選 (C)。"},{"stem":"My sister does not like the jacket, and I don't, ___.","options":{"A":"either","B":"so","C":"too","D":"yet"},"answer":"A","explanation":"My sister does not like it，我也「不喜歡」，否定句中用 either 表示「也（不）」，故選 (A)。"},{"stem":"I sent Lucy two e-mails last week, but she has not answered me ___.","options":{"A":"already","B":"also","C":"either","D":"yet"},"answer":"D","explanation":"she has not answered yet，yet 用於否定句或疑問句，表示「還沒」，故選 (D)。"}]},{"id":10,"name":"主題10 Wh- 疑問詞","questions":[{"stem":"Ms. Lee：___ did you get this beautiful card? Mr. Wang：One of my students made it for me. She sends me a card every year.","options":{"A":"Who","B":"Where","C":"When","D":"What"},"answer":"B","explanation":"王先生回答了卡片的來源，可知問句是用 where 詢問卡片「從哪裡來的」，故選 (B)。"},{"stem":"Nancy：Did the teacher tell us ___ to get to the station? Susan：Yes. She said we should meet there at ten.","options":{"A":"how","B":"what","C":"when","D":"where"},"answer":"C","explanation":"由 Susan的回應 She said we should meet there at ten. （她說我們應該10點在那裡集合。），可推測 Nancy 應該是問集合的「時間」，故空格應選 (C) 。"},{"stem":"Alice：Do you know ___ Grandma is going to visit us? Willy：It's next week. She told me on the phone. And we'll take her to the national park.","options":{"A":"where","B":"when","C":"whether","D":"why"},"answer":"B","explanation":"由答句「下週」可推知，間接問句是問「何時」，故選 (B)。"},{"stem":"Carson：Bye, girls. See you tomorrow, Phoebe. Shirley：___ did Carson say he would see you tomorrow? Phoebe：We're going out for a picnic. Do you want to come?","options":{"A":"What","B":"When","C":"Where","D":"Why"},"answer":"D","explanation":"Phoebe 的回答內容為原因說明，故選詢問原因的 (D)「為什麼」。"},{"stem":"Lucy：___ is Ted doing in the kitchen? Ryan：He\\'s cooking dinner for us.","options":{"A":"What","B":"Where","C":"Who","D":"Why"},"answer":"A","explanation":"Ryan 回答「他在廚房裡煮晚餐」，問的是「在做什麼」，用 What，故選 (A)。"},{"stem":"Bob：When is Mr. Wang going to Japan? Tim：On ___.","options":{"A":"June","B":"June fourth","C":"the year 2010","D":"June, 2010"},"answer":"B","explanation":"Tim 回答 On June fourth（六月四日），問的是具體日期，用 When，答案中 On June fourth 為完整日期，故選 (B)。"},{"stem":"Daisy：I went to Taitung to visit my uncle there. Grace：Really? ___ were you there? Daisy：For two weeks.","options":{"A":"How long","B":"How often","C":"How soon","D":"What time"},"answer":"A","explanation":"Daisy 回答 For two weeks（兩週），問的是時間長度，用 How long，故選 (A)。"},{"stem":"Carl：___? Tina：It's three thirty. Why? You look worried. Carl：I have a math test at four o'clock.","options":{"A":"How much money do you have\\","B":"What day is today\\","C":"When does your school begin\\","D":"What time is it"},"answer":"D","explanation":"Carl 說他四點有考試，看起來很擔心，Tina 知道時間對 Carl 很重要，問的是「現在幾點」，用 What time is it，故選 (D)。"},{"stem":"Kevin: ___ sweater looks better on me, the red one or the blue one? Betty: The red one, I think.","options":{"A":"Which","B":"How","C":"Where","D":"What"},"answer":"A","explanation":"Kevin：我穿哪一件毛衣比較好看，紅色的還是藍色的？\\ Betty：我覺得紅色的比較好。根據上下文，Kevin 請 Betty 做一選擇，所以應選 which（哪一個）。"},{"stem":"Robert：Where are the boys playing? Barbie：___","options":{"A":"After school.","B":"Under the tree.","C":"On Sunday.","D":"To the"},"answer":"B","explanation":"Robert 問 Where（在哪裡），Barbie 回答 Under the tree（在樹下）表示地點，故選 (B)。"},{"stem":"Sarah：___ does your little sister get up? Willy：About six.","options":{"A":"How often","B":"How old","C":"What day","D":"What time"},"answer":"D","explanation":"Willy 回答 About six（大約六點），問的是時間，用 What time，故選 (D)。"},{"stem":"Susan：Do you know ___ you have talked on the phone? Aren't you thirsty? Walter：Oh, come on! I've only talked for thirty minutes!","options":{"A":"how old","B":"how often","C":"how many","D":"how long"},"answer":"D","explanation":"你知不知道你講電話講了多久？你不渴啊？噢，拜託！我才講三十分鐘而已！(A) 多大 (B) 多常 (C) 多少 (D) 多久。依據上下文，本題問的是時間的長短，故選「多久」。"},{"stem":"Kathy: ___ your French class, Jerry? Jerry: I couldn't understand a word the first month, but it's getting better now.","options":{"A":"How's","B":"What's","C":"When is","D":"Which is"},"answer":"A","explanation":"Jerry 回答他的法文課情況（進展如何），問的是課程狀況，用 How's，故選 (A)。"},{"stem":"Mr. Wang：___ are the children? Ms. Chen：They\\'re having fun in the playground.","options":{"A":"Who","B":"What","C":"When","D":"Where"},"answer":"D","explanation":"Ms. Chen 回答「他們在操場上玩」，問的是「孩子們在哪裡」，用 Where，故選 (D)。"},{"stem":"Mrs. Wang：___ are your children? Mrs. Lin：Ted is five. Peter is eight.","options":{"A":"How","B":"How old","C":"How long","D":"How much"},"answer":"B","explanation":"Mrs. Lin 回答兩個孩子的年齡，問的是年齡，用 How old，故選 (B)。"},{"stem":"Emma：___ umbrella is it? Sherry：It's Ann's. She forgot to take it home.","options":{"A":"What","B":"Where","C":"Which","D":"Whose"},"answer":"D","explanation":"Ann 忘記把傘帶走，問的是「誰的」雨傘，用 Whose，故選 (D)。"},{"stem":"Anita：I saw Nora in the teacher's office this morning. Do you know ___ she was there? Brian：She cheated on tests.","options":{"A":"how","B":"if","C":"when","D":"why"},"answer":"D","explanation":"由 Brian 的回答「她考試作弊」以及 Anita 說「我今天早上看到 Nora 在老師的辦公室裡」可知，Anita 應是詢問「為什麼她在那裡」，故選用來詢問原因的疑問詞 why。"},{"stem":"Ken：___ is a boat ticket for children? Paul：How old is your child? It's free for kids under three years old.","options":{"A":"How long","B":"How much","C":"How often","D":"How soon"},"answer":"B","explanation":"Paul 問孩子幾歲（三歲以下免費），問的是船票「多少錢」，用 How much，故選 (B)。"},{"stem":"Lisa is new here, so she doesn't know ___ the restaurant is.","options":{"A":"that","B":"where","C":"whether","D":"which"},"answer":"B","explanation":"Lisa 不知道餐廳「在哪裡」，間接問句用 where，故選 (B)。"},{"stem":"Son：Mom, ___ are my glasses? Mom：Aren\\'t they on the table in the living room?","options":{"A":"what","B":"when","C":"where","D":"how"},"answer":"C","explanation":"Mom 回答「不是在客廳的桌上嗎？」，問的是眼鏡「在哪裡」，用 where，故選 (C)。"},{"stem":"Jill：Have you decided ___ you will celebrate your 30^th^ birthday? Sue：Yeah, I'm going to have a big barbecue party.","options":{"A":"how","B":"where","C":"what","D":"when"},"answer":"A","explanation":"由 Sue 回答「舉辦烤肉派對」可知 Jill 詢問是否決定「如何」慶祝生日了，故選 (A)。"},{"stem":"Teacher：Does anyone know ___ the famous writer was born? Mei-ling：I know! In Taitung, right? Teacher：You got it!","options":{"A":"how","B":"when","C":"where","D":"whether"},"answer":"C","explanation":"由 Mei-ling 的回答「在臺東」可知，老師是詢問那位知名的作家出生在「哪裡」，故選 (C)。"}]},{"id":11,"name":"主題11 名詞子句、間接問句","questions":[{"stem":"Willy found ___ the novel he bought last week was under his bed.","options":{"A":"that","B":"where","C":"whether","D":"which"},"answer":"A","explanation":"found ___ the novel was under his bed，引導名詞子句表「事實」用 that，故選 (A)。"},{"stem":"Jacky would like to bring that poor dog back home, but he isn't sure ___ his mother likes dogs.","options":{"A":"how","B":"what","C":"whether","D":"which"},"answer":"C","explanation":"Jacky想把那隻可憐的狗兒帶回家，但他不確定他媽媽是否喜歡狗。(A) 如何 (B) 什麼 (C) 是否 (D) 何者。whether為「是否」，後接子句，表示「不知是否喜歡狗」。"},{"stem":"A- wei：This typhoon is so terrible! A- fen：Yes, I\\'m not sure ___ we can still go fishing tomorrow.","options":{"A":"who","B":"what","C":"which","D":"whether"},"answer":"D","explanation":"not sure ___ we can go fishing，表示「不確定是否」用 whether，故選 (D)。"},{"stem":"Alice learned from the TV news ___ Nora Jones was coming to Taiwan the next day.","options":{"A":"that","B":"where","C":"which","D":"whether"},"answer":"A","explanation":"learned ___ Nora Jones was coming，引導名詞子句表「事實」用 that，故選 (A)。"},{"stem":"I'm not sure if Kevin ___ this morning, but if he does, I'll tell him that you called.","options":{"A":"will come in","B":"comes in","C":"has come in","D":"came in"},"answer":"A","explanation":"第一個 if 為 whether / if 引導名詞子句的用法，子句中的時態依事實表示；第二個 if 為條件句，子句中的時態以現在式表示未來；再由上下文判斷，說話者並不知道 Kevin 是否會來，表示 Kevin 尚未出現，故選表示未來時態的 (A)。"},{"stem":"My father told me last night ___ we're going to the Food Festival this weekend. My brother and I felt very excited.","options":{"A":"whether","B":"where","C":"what","D":"that"},"answer":"D","explanation":"此句是 that 所引導的名詞子句作為 told 的受詞，以說明父親昨晚所說的事情，故選 (D)。"},{"stem":"I was surprised to know from the newspaper yesterday ___ flowers do not always smell sweet; some can smell like dead fish.","options":{"A":"that","B":"when","C":"where","D":"which"},"answer":"A","explanation":"子句 flowers do not always smell sweet 句意完整，不缺主詞、受詞、時間或地點，因此此子句應為 that 引導的名詞子句當主要子句 know 的受詞，故選 (A)。"},{"stem":"Jerry wanted to know ___ he was kicked off the soccer team, but no one gave him a good reason.","options":{"A":"where","B":"when","C":"whether","D":"why"},"answer":"D","explanation":"由後句「但沒有人給他一個充分的理由」，可推知 Jerry 想知道自己「為什麼」被踢出球隊，故選 (D)。"}]},{"id":12,"name":"主題12 關係代名詞","questions":[{"stem":"Fiona loves listening to her children sing songs ___ at school.","options":{"A":"are learned","B":"that learned","C":"they learned","D":"that they"},"answer":"C","explanation":"Fiona...songs 為完整句，因此空格應填入關係子句，用來形容名詞 songs。選項 (A) 與 (B) 缺主詞；選項 (D) 則多了個主詞 they，放入句中語意不清。選項 (C) 可形成省略受格 that / which 的關係子句，而 they 指 children，表「孩童在學校學的歌曲」，故選 (C)。"},{"stem":"James：Do you see the street vendor over there? Philip：Which one? James：The one ___ is wearing a hat.","options":{"A":"it","B":"he","C":"who","D":"which"},"answer":"C","explanation":"先行詞 the one 指人，關係子句中作主詞，用 who，故選 (C)。"},{"stem":"I need someone ___ his work to take out the garbage for me.","options":{"A":"finish","B":"finished","C":"has finished","D":"who has finished"},"answer":"D","explanation":"someone ___ has finished his work，先行詞指人作主詞，用 who has finished，故選 (D)。"},{"stem":"The movie is about a true story ___ happened in Korea in 1945.","options":{"A":"it","B":"that","C":"what","D":"when"},"answer":"B","explanation":"先行詞 a true story 為事物，關係子句中作主詞，用 that，故選 (B)。"},{"stem":"Actor David Piper became tired of talking about the movie ___ after he was interviewed about it many times.","options":{"A":"he is famous","B":"that he is famous","C":"that is famous for","D":"he is famous for"},"answer":"D","explanation":"be famous for... 表「以......聞名」，而關係代名詞於關係子句中當受格時可以省略，故選 (D)。"},{"stem":"Eva：What\\'s your ideal mate like? Ada：Well, I want a husband who ___ well. I enjoy eating, but I hate kitchens.","options":{"A":"cook","B":"cooks","C":"cooking","D":"to cook"},"answer":"B","explanation":"先行詞 a husband 指人，關係子句主詞，用 who，且第三人稱單數動詞 cooks，故選 (B)。"},{"stem":"I like to read comic books ___ me laugh.","options":{"A":"made","B":"to have made","C":"that make","D":"which makes"},"answer":"C","explanation":"我喜歡看會逗我笑的漫畫書。本題是測驗關係代名詞的用法；comic books 為物，故關係代名詞應用 which 或 that，而本題的先行詞為複數，動詞用原形即可，正確答案為 (C)。"},{"stem":"Do you remember the girl ___ looked worried at the train station yesterday?","options":{"A":"who","B":"where","C":"which","D":"what"},"answer":"A","explanation":"先行詞 the girl 指人，關係子句中作主詞，用 who，故選 (A)。"},{"stem":"The boys ___ are coming to my office tomorrow were my students five years ago.","options":{"A":"who","B":"they","C":"those","D":"whose"},"answer":"A","explanation":"先行詞 The boys 指人複數，關係子句中作主詞，用 who，故選 (A)。"},{"stem":"At dinner time, I often enjoy telling Mom everything ___ at school.","options":{"A":"happened","B":"was happening","C":"that happened","D":"which"},"answer":"C","explanation":"everything ___ happened at school，先行詞為 everything，用 that，故選 (C)。"},{"stem":"All the excuses Nick made ___ a lot about how much he hates to do the job.","options":{"A":"say","B":"saying","C":"which say","D":"to say"},"answer":"A","explanation":"excuse 意為「藉口」，依句子結構，在此當主詞，後面應該接動詞，卻出現人名 Nick，可判斷 Nick made 為省略關係代名詞 that / which 的形容詞子句（原句為 that / which Nick made），而空格的位置才是該填入搭配複數名詞 excuses 的動詞，故選 (A)。"},{"stem":"The new medicine that just came out on the market ___ thousands of lives.","options":{"A":"and saved","B":"has saved","C":"saving","D":"to save"},"answer":"B","explanation":"that just came out on the market 為修飾 The new medicine 的關係子句，本句主詞為 The new medicine，且缺少動詞，故選 (B)。"},{"stem":"Students ___ to go on the school trip should ask their parents first.","options":{"A":"who want","B":"want","C":"who they want","D":"what they want"},"answer":"A","explanation":"由句子結構可知需用關係代名詞修飾先行詞 students，表示「想參加學校旅遊的學生」，且關係代名詞在句中當主詞，不可省略，故選 (A)。"}]},{"id":13,"name":"主題13 連接詞","questions":[{"stem":"The movie starts at two o'clock, ___ let's meet at the theater at one forty-five.","options":{"A":"so","B":"or","C":"if","D":"because"},"answer":"A","explanation":"後半句說「要一點四十五在戲院碰面」是前句「電影兩點開始」的結果，故用 so（所以）連接，故選 (A)。"},{"stem":"John：Will you be at Linda's party this Sunday? I'd like you to meet my girlfriend. Tony：Sure, if Linda ___ me. But I haven't got any call yet.","options":{"A":"will invite","B":"had invited","C":"has invited","D":"invites"},"answer":"D","explanation":"因為「還沒收到邀請」，可知 if 是表未來的條件句，此時應用現在簡單式代替未來式，故選 (D)。"},{"stem":"The famous writer likes to write at this coffee shop. He comes in the early morning and stays here writing ___ it is closed.","options":{"A":"after","B":"because","C":"until","D":"when"},"answer":"C","explanation":"until 表「直到......為止」，指持續做某件事情直到某時間點，句意為一直待在咖啡廳「直到」它關門。"},{"stem":"Jimmy would not get up for breakfast, ___ his dad had already tried to pull him from his bed several times.","options":{"A":"although","B":"because","C":"if","D":"until"},"answer":"A","explanation":"此處的 would 表「意願」，would not 便是「拒絕；不願」；依題意，「雖然」父親已經試了多次，Jimmy 依然拒絕起床吃早餐，故選 (A)。"},{"stem":"I can't find my history book, ___ I know it's somewhere in the living room.","options":{"A":"because","B":"but","C":"since","D":"until"},"answer":"B","explanation":"前句提到「找不到歷史課本」，而後句提到「知道它在客廳的某處」，前後句為語意相反的語句，要用連接詞 but 連接，故選(B)。"},{"stem":"Ms. Liu usually gives us a lot of homework, ___ she didn't give us any today.","options":{"A":"but","B":"if","C":"or","D":"so"},"answer":"A","explanation":"由前句「劉老師通常給我們很多回家作業」及後句「她今天沒有給我們任何（作業）」可知，空格應選含有轉折語氣的連接詞 but，故選 (A)。"},{"stem":"Mr. Hu speaks good English ___ he lived in the U.S. for many years.","options":{"A":"because","B":"but","C":"so","D":"whether"},"answer":"A","explanation":"前句「胡先生能說流利的英文」和後句「他在美國住了很多年」，兩句語意為因果關係，且後句表「原因」，故用 because（因為）來連接兩句，故選 (A)。"},{"stem":"___ going shopping, Dad asked me if Mom would eat at home tonight. He wanted to know what he should buy for the dinner.","options":{"A":"Without","B":"Until","C":"By","D":"Before"},"answer":"D","explanation":"由「爸爸要知道自己該買什麼」，可推測爸爸是在外出購物「之前」詢問，故選 (D)。"},{"stem":"Tonight I'll stay at an office until I ___ the work.","options":{"A":"finish","B":"am finishing","C":"finished","D":"will finish"},"answer":"A","explanation":"以 until 連接的時間子句中，用現在簡單式來描述將來的事情，故選 (A)。"},{"stem":"If the weather is fine this weekend, my family ___ to the beach for two days.","options":{"A":"go","B":"went","C":"have gone","D":"will go"},"answer":"D","explanation":"If 子句條件句（現在式），主句用未來式 will go，故選 (D)。"},{"stem":"Josh has planned to make a trip to New York and \\_\\_\\_\\_\\_ some of his friends there.","options":{"A":"visit","B":"visits","C":"visiting","D":"visited"},"answer":"A","explanation":"本句 planned 後面用 and 連接兩個to+V，and後面省略 to，兩者形式應一致，故選 (A)。"},{"stem":"If Frank ___ to the office tonight, give this package to him.","options":{"A":"came","B":"comes","C":"has come","D":"will come"},"answer":"B","explanation":"If Frank ___ to the office tonight，條件子句用現在式 comes，故選 (B)。"},{"stem":"I have to catch the bus right now, ___ I'll miss my brother's birthday party.","options":{"A":"and","B":"because","C":"or","D":"until"},"answer":"C","explanation":"have to catch the bus（必須搭上那班公車）表示不想錯過某件事情，故選具有避免壞結果含意的連接詞 (C)「否則；要不然」。"},{"stem":"Enya got up early this morning ___ she did not want to be late for her trip.","options":{"A":"if","B":"but","C":"though","D":"because"},"answer":"D","explanation":"Enya 早起是「因為」不想遲到，用 because 表原因，故選 (D)。"},{"stem":"A-hong can speak two foreign languages, ___ his brothers can\\'t.","options":{"A":"but","B":"or","C":"so","D":"then"},"answer":"A","explanation":"A-hong 會說兩種外語，「但是」他的兄弟不會，用 but 表對比，故選 (A)。"},{"stem":"Elsa hates going shopping, ___ she went last night when her grandpa asked her to buy some medicine for him.","options":{"A":"because","B":"but","C":"if","D":"so"},"answer":"B","explanation":"由前句 Elsa 討厭去逛街購物可知，後句她昨晚為了爺爺請她買藥而去購物，可推知兩句在語氣上不相符。用連接詞 but 做語氣上的轉折最合適，故選 (B)。"},{"stem":"Jane：I heard you went to Yangmingshan last spring vacation. Dick：We not only visited the park ___ took a hot-spring bath. It was a great trip.","options":{"A":"by the way","B":"but also","C":"after","D":"and"},"answer":"B","explanation":"not only...but also 固定搭配，「不只...還...」，故選 (B) but also。"},{"stem":"Linda：Jenny, will you still be here this afternoon? Jenny：Yeah, I think I'll stay ___ five. Then I'll leave for dinner.","options":{"A":"at","B":"for","C":"since","D":"until"},"answer":"D","explanation":"由回應 Yeah（是啊）可知 Jenny 會留在這裡，又後句表示 Then I'll leave for dinner.（然後我才會離開去吃晚餐。），可知 Jenny 會留在這裡「直到」五點，故選 (D) until。"},{"stem":"John felt much better ___ he took the medicine the doctor gave him.","options":{"A":"if","B":"so","C":"than","D":"after"},"answer":"D","explanation":"John 吃了藥「之後」感覺好多了，after 表時間先後，故選 (D)。"},{"stem":"Mr. Green was very angry with his daughter ___ she always put her dirty socks on the dinning table.","options":{"A":"although","B":"because","C":"but","D":"until"},"answer":"B","explanation":"Green先生非常生他女兒的氣，因為她總是把她的髒襪子放在餐桌上。(A) 雖然 (B) 因為 (C) 但是 (D) 直到。由題目前後可得知本題是在闡述因果關係的兩個句子；前句是結果（生氣），後句是原因（髒襪子放在餐桌上），用對等連接詞來連接兩句，所以最適合的答案為 (B)。"},{"stem":"My grandmother believes that young children in big cities get sick easily ___ the air is dirty.","options":{"A":"because","B":"before","C":"but","D":"whether"},"answer":"A","explanation":"年輕孩子生病「因為」空氣污染，用 because 表原因，故選 (A)。"},{"stem":"Dad：Are you going out? It's really late now. Mitch：I know, but it's the last day to buy tickets to the World Cup games, ___ I must go.","options":{"A":"if","B":"or","C":"so","D":"though"},"answer":"C","explanation":"由 Mitch 上一句表示 it's the last day to buy tickets to the World Cup game（今天是世界盃比賽售票的最後一天），可知雖然 Mitch 知道時間很晚了，但是因為今天是售票的最後一天，「所以」他還是一定要出門，故選 (C)。"},{"stem":"___ Annie knows fast food is not good for her health, she still eats it.","options":{"A":"Although\\","B":"Because\\","C":"If\\","D":"When"},"answer":"A","explanation":"四個選項均為連接詞，分別為 (A)「雖然」、(B)「因為」、(C)「如果」、(D)「當」。主要子句的關鍵字為「仍舊吃」速食，依文意應選 (A)。"},{"stem":"Da-fa is cleaning the house ___ some of his friends are coming for dinner.","options":{"A":"because","B":"but","C":"if","D":"so"},"answer":"A","explanation":"Da-fa 打掃「因為」朋友要來吃晚飯，because 表原因，故選 (A)。"},{"stem":"It was an exciting moment for Mr. and Mrs. Wang ___ they learned that they were going to have a baby.","options":{"A":"what","B":"when","C":"whether","D":"why"},"answer":"B","explanation":"It was an exciting moment ___ they learned...，「當他們得知...時」用 when，故選 (B)。"},{"stem":"It was very hot when we got to Kenting National Park, ___ we still had a good time there.","options":{"A":"or","B":"so","C":"but","D":"because"},"answer":"C","explanation":"雖然天氣很熱，「但是」還是玩得開心，but 表轉折，故選 (C)。"},{"stem":"Sue is very sick and has to stop working for several weeks. But ___ she feels better, she will get back to work.","options":{"A":"so far","B":"since then","C":"because","D":"as soon as"},"answer":"D","explanation":"as soon as 表「一...就...」，一感覺好些就回去工作，故選 (D)。"},{"stem":"This dress is pretty, ___ it does not look good on me.","options":{"A":"so","B":"but","C":"or","D":"if"},"answer":"B","explanation":"主要子句的 is pretty（是美麗的），與附屬子句的 does not look good（看起來並不好看），有語意上的轉折、反差，故選 (B)。"},{"stem":"___ Joe looks strong, in fact he gets sick easily.","options":{"A":"Because","B":"If","C":"Though","D":"When"},"answer":"C","explanation":"雖然 Joe 看起來強壯，「但事實上」容易生病，Though 表讓步，故選 (C)。"},{"stem":"Don't go away when you're cooking, ___ the food might burn.","options":{"A":"but","B":"if","C":"or","D":"so"},"answer":"C","explanation":"Don't go away，「否則」食物會燒焦，or 表否定條件結果，故選 (C)。"},{"stem":"If we play some interesting games in class, there ___ more fun in learning English.","options":{"A":"are","B":"has","C":"will be","D":"will have"},"answer":"C","explanation":"If 條件句（現在式），主句用未來式 will be，There will be more fun，故選 (C)。"},{"stem":"Do you remember the CD I was looking for for months? I ___ found it in a small shop. Look, here it is!","options":{"A":"almost","B":"even","C":"finally","D":"still"},"answer":"C","explanation":"終於（finally）在小店裡找到了，finally 表示「最終」，故選 (C)。"},{"stem":"Patty spent several days planning to invite Charlie to dinner, ___ she couldn't say a word when they met.","options":{"A":"but","B":"if","C":"or","D":"so"},"answer":"A","explanation":"由前後句的對比關係可知，雖然計畫了好幾天，但見面時卻說不出話來，用 but 連接表示轉折，故選 (A)。"},{"stem":"John will stay with his sister until he ___ an apartment.","options":{"A":"will find","B":"would find","C":"finds","D":"found"},"answer":"C","explanation":"until 引導的時間副詞子句，用現在簡單式表未來，故選 (C)。"}]},{"id":14,"name":"主題14 特殊句構（there is、祈使句、附加問句、used to等）","questions":[{"stem":"If you're interested in our business plan, ___ this number and ask for Ms. Lee. She'll answer your questions.","options":{"A":"calling","B":"call","C":"and call","D":"to call"},"answer":"B","explanation":"if 子句描述的情況若有可能在將來發生，主要子句除了用現在簡單式表未來外，亦有祈使句的結構；另，對等連接詞 and 用來連接文法功能相同的字詞，而此處 and 後面為原形動詞 ask，可判斷本題主要子句為祈使句結構，空格應填入「原形動詞」，故選 (B)。"},{"stem":"Lora likes to eat bananas that are already a little brown on the outside, and so ___ I.","options":{"A":"am","B":"do","C":"have","D":"will"},"answer":"B","explanation":"本題考附和句，前句是現在簡單式一般動詞，且後句主詞是 I，因此附和句助動詞要用 do，故選 (B)。"},{"stem":"There ___ more than twenty clubs in our school. Which one would you like to join?","options":{"A":"has","B":"have","C":"is","D":"are"},"answer":"D","explanation":"表達「在......有......」時，須使用 there is / are 句型，本句主詞為「超過二十個社團」，須選複數 be動詞 are，故選 (D)。"},{"stem":"Jenny：How many countries ___ in Europe? Betty：I\\'m not sure.","options":{"A":"is it","B":"is there","C":"are they","D":"are there"},"answer":"D","explanation":"How many countries ___ in Europe？There are...句型，疑問形式為 are there，故選 (D)。"},{"stem":"Oscar：I\\'m going to the museum. Bus Number 286 goes there, ___? David：Yes, but you can take a Number 287, too.","options":{"A":"does it","B":"doesn\\'t it","C":"is it","D":"isn\\'t it"},"answer":"B","explanation":"Bus 286 goes there，附加問句與前句動詞一致，goes 為第三人稱單數現在式，附加問句用 doesn't it，故選 (B)。"},{"stem":"Rose：It\\'s time to go to bed. You have to get up early tomorrow, ___? Nina：Yes, my class is going hiking tomorrow.","options":{"A":"can\\'t you","B":"don\\'t you","C":"aren\\'t you","D":"haven\\'t you"},"answer":"B","explanation":"You have to get up early，have to 的附加問句用 don't you，故選 (B)。"},{"stem":"Playing video games is fun, ___?","options":{"A":"do they","B":"aren\\'t they","C":"does it","D":"isn\\'t it"},"answer":"D","explanation":"Playing video games is fun，主詞為動名詞（視為單數），附加問句用 isn't it，故選 (D)。"},{"stem":"Judy：The ball game will be on TV tomorrow at six in the morning. Lucy: ___ up early and you won't miss it.","options":{"A":"Get","B":"To get","C":"Getting","D":"Gets"},"answer":"A","explanation":"祈使句（叫人採取行動），動詞原形放句首，Get up early，故選 (A)。"},{"stem":"Somewhere along the road, ___ a shop which sells things from foreign countries.","options":{"A":"that is","B":"it is","C":"it has","D":"there is"},"answer":"D","explanation":"本句將地方副詞放句首引導表示強調，原句為 There is a shop somewhere along the road.，故選 (D)。另三個選項的指示代名詞 that 與代名詞 it 若放於句中，所指不明，故不選。"},{"stem":"In my school days, I ___ to English radio programs every day. That was how I learned English at that time.","options":{"A":"listen","B":"have listened","C":"used to listen","D":"was listening"},"answer":"C","explanation":"關鍵為第一句表達「狀態或習慣」的 every day，以及下一句的「過去式」時態；由此可推斷，第一句是在說明「過去的習慣」，要表達「過去的習慣，現在無此習慣」，須用「used to＋原形動詞」，故選 (C)。"},{"stem":"Wendy：Do you know where the library is? Simon：Just ___ going for two more blocks and you'll see it.","options":{"A":"keep","B":"to keep","C":"keeping","D":"keeps"},"answer":"A","explanation":"Wendy：你知不知道圖書館在哪裡？\\ Simon：只要再直走兩個街區你就會看見了。\\ 本句為祈使句的用法，故使用原形動詞。"},{"stem":"My husband ___ send me flowers every week before we got married. But now he never does.","options":{"A":"should","B":"used to","C":"was going to","D":"was afraid to"},"answer":"B","explanation":"used to 表示「過去習慣」，現在已不再做，used to send 表過去曾送花，故選 (B)。"},{"stem":"___ carefully before you buy a new house.","options":{"A":"Thinking","B":"To think","C":"Thinks","D":"Think"},"answer":"D","explanation":"祈使句動詞原形放句首，Think carefully，故選 (D)。"},{"stem":"A-ming：Dad, can I go dancing tomorrow? Mr. Wu：___ your homework and we\\'ll talk about it.","options":{"A":"Finishes","B":"Finishing","C":"To finish","D":"Finish"},"answer":"D","explanation":"祈使句動詞原形放句首，Finish your homework，故選 (D)。"},{"stem":"___ a map with you when you go to a place for the first time.","options":{"A":"Have taken","B":"Take","C":"Taking","D":"To take"},"answer":"B","explanation":"依句子結構，when 之前為主要子句，而主要子句缺主詞與動詞，因此空格要填入省略主詞 You 的動詞 Take 以形成祈使句結構，故選 (B)。"},{"stem":"Paul：What did you find under his desk? Tom：Oh. ___ all kinds of things：a basketball, pencils, a hat, and fries!","options":{"A":"there were","B":"it was","C":"it had","D":"there was"},"answer":"A","explanation":"找到的東西是多種物品（複數），there were all kinds of things，故選 (A)。"},{"stem":"Grace: How many people ___ in the office when the fire happened? Harry: Five. Luckily, nobody got hurt.","options":{"A":"did they","B":"had they","C":"were there","D":"would there be"},"answer":"C","explanation":"Grace：火災發生時有多少人在辦公室裡？\\ Harry：五個人。幸運的是，沒有人受傷。"},{"stem":"The tall man over there is our new English teacher, ___?","options":{"A":"is he","B":"is there","C":"isn't he","D":"isn't there"},"answer":"C","explanation":"The tall man...is our new English teacher，附加問句與 is 相反，用 isn't he，故選 (C)。"},{"stem":"Robert：Charles wanted to borrow \\$1,000 from me yesterday. Mandy：You didn't lend him the oney, ___?","options":{"A":"would you","B":"wouldn't you","C":"did you","D":"didn't you"},"answer":"C","explanation":"You didn't lend him the money，附加問句與前句相反（否定→肯定），用 did you，故選 (C)。"},{"stem":"___ will be a welcome party next week for the new students. Will you come with me?","options":{"A":"It","B":"There","C":"They","D":"We"},"answer":"B","explanation":"There will be a welcome party，There 作引導詞，故選 (B)。"},{"stem":"Lucy: Do you think Sally and Martin should get married? Rose: Why not? They love each other, ___?","options":{"A":"will they","B":"won't they","C":"do they","D":"don't they"},"answer":"D","explanation":"They love each other，附加問句與 love 相反，用 don't they，故選 (D)。"},{"stem":"Getting up early on a cold morning is not easy, ___?","options":{"A":"are you","B":"do you","C":"does it","D":"is it"},"answer":"D","explanation":"本題考附加問句。主要句子中動詞為 is，而動名詞 Getting up 為主詞，於附加問句中應改為代名詞 it，故選 (D)。"},{"stem":"When I entered the house for the first time, I found ___ was a big round table in the living room.","options":{"A":"it","B":"that","C":"there","D":"this"},"answer":"C","explanation":"本句句意為「第一次進到房子之後，我發現客廳有一個大圓桌」，故選 (C)。"},{"stem":"Alice really likes having noodles for breakfast, ___?","options":{"A":"doesn't she","B":"is she","C":"hasn't she","D":"did she"},"answer":"A","explanation":"句中的動詞為現在式 likes，並為肯定句，故附加問句用 doesn't she，故選 (A)。"},{"stem":"(In the teachers\\' office) Miss Huang：Sue, ___ students in the classroom? Miss Cheng：I don\\'t think so. School\\'s over. Miss Huang：But I hear people talking over there.","options":{"A":"are they","B":"do they","C":"is there","D":"are there"},"answer":"D","explanation":"Are there any students...？There be 句型的疑問形式，故選 (D) are there。"},{"stem":"Now we have to take a taxi home because ___ are no buses after eleven o'clock.","options":{"A":"here","B":"there","C":"they","D":"we"},"answer":"B","explanation":"there are no buses，there 作引導詞表示「有...」的存在，故選 (B)。"},{"stem":"She's going to Europe, ___ she?","options":{"A":"doesn't","B":"hasn't","C":"isn't","D":"won't"},"answer":"C","explanation":"She's going to Europe，附加問句與 is 相反，用 isn't she，故選 (C)。"},{"stem":"Grace：How many pencils ___ in your pencil box? Allen：Only one.","options":{"A":"are there","B":"are they","C":"is there","D":"is it"},"answer":"A","explanation":"How many pencils ___ in your pencil box？複數 pencils，用 are there，故選 (A)。"},{"stem":"You've studied English for a long time, ___?","options":{"A":"did you","B":"didn\\'t you","C":"have you","D":"haven\\'t you"},"answer":"D","explanation":"You've studied English for a long time，附加問句與 have 相反，用 haven't you，故選 (D)。"}]}]};
+
+let selectedTopic = null;
+let selectedCount = null;
+let sessionQuestions = [];
+let currentIdx = 0;
+let answers = []; // {question, chosen, correct, isCorrect}
+let startTime = null;
+
+// Shuffle helper
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function formatTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  if (m === 0) return `${sec} 秒`;
+  return `${m} 分 ${sec} 秒`;
+}
+
+// ── SETUP ──
+function buildSetup() {
+  const grid = document.getElementById('topic-grid');
+  grid.innerHTML = '';
+
+  // Random button
+  const randBtn = document.createElement('button');
+  randBtn.className = 'topic-btn random';
+  randBtn.dataset.id = 'random';
+  randBtn.innerHTML = '🎲 隨機出題 (全部主題)';
+  randBtn.addEventListener('click', () => selectTopic('random', DATA.topics.flatMap(t => t.questions).length));
+  grid.appendChild(randBtn);
+
+  // Topic buttons
+  DATA.topics.forEach(topic => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-btn';
+    btn.dataset.id = topic.id;
+    btn.innerHTML = `<span>${topic.name}</span><span class="count-badge">${topic.questions.length} 題</span>`;
+    btn.addEventListener('click', () => selectTopic(topic.id, topic.questions.length));
+    grid.appendChild(btn);
+  });
+
+  // Count buttons
+  document.querySelectorAll('.count-btn').forEach(btn => {
+    btn.addEventListener('click', () => selectCount(parseInt(btn.dataset.count)));
+  });
+
+  document.getElementById('btn-start').addEventListener('click', startQuiz);
+  document.getElementById('btn-retry').addEventListener('click', retryQuiz);
+  document.getElementById('btn-next-round').addEventListener('click', nextRound);
+  document.getElementById('btn-next').addEventListener('click', nextQuestion);
+}
+
+function selectTopic(id, maxCount) {
+  selectedTopic = id;
+  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.topic-btn[data-id="${id}"]`);
+  if (btn) btn.classList.add('active');
+
+  // Update count availability
+  document.querySelectorAll('.count-btn').forEach(b => {
+    const c = parseInt(b.dataset.count);
+    b.disabled = false;
+    if (c > maxCount) b.disabled = true;
+  });
+
+  // Auto-select count if current selection is now invalid
+  if (selectedCount && selectedCount > maxCount) {
+    // find max available
+    const opts = [5, 10, 15, 20].filter(n => n <= maxCount);
+    if (opts.length > 0) selectCount(opts[opts.length - 1]);
+    else { selectedCount = null; updateStartBtn(); }
+  }
+  updateStartBtn();
+}
+
+function selectCount(n) {
+  selectedCount = n;
+  document.querySelectorAll('.count-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.count) === n);
+  });
+  updateStartBtn();
+}
+
+function updateStartBtn() {
+  document.getElementById('btn-start').disabled = !(selectedTopic && selectedCount);
+}
+
+function startQuiz() {
+  let pool;
+  if (selectedTopic === 'random') {
+    pool = DATA.topics.flatMap(t => t.questions);
+  } else {
+    const topic = DATA.topics.find(t => t.id === selectedTopic);
+    pool = topic.questions;
+  }
+  pool = shuffle(pool);
+  sessionQuestions = pool.slice(0, selectedCount);
+  currentIdx = 0;
+  answers = [];
+  showScreen('quiz');
+  showQuestion();
+}
+
+// ── QUIZ ──
+function showQuestion() {
+  if (currentIdx === 0) startTime = Date.now();
+  const q = sessionQuestions[currentIdx];
+  const total = sessionQuestions.length;
+
+  document.getElementById('progress-text').textContent = `第 ${currentIdx + 1} / ${total} 題`;
+  document.getElementById('progress-bar').style.width = `${(currentIdx / total) * 100}%`;
+
+  // Stem - replace ___ with styled blank
+  const stem = q.stem.replace(/___/g, '<span class="blank">___</span>');
+  document.getElementById('question-stem').innerHTML = stem;
+
+  // Options
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  Object.entries(q.options).forEach(([letter, text]) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letter}</span><span>${text}</span>`;
+    btn.addEventListener('click', () => submitAnswer(letter));
+    grid.appendChild(btn);
+  });
+
+  // Hide feedback and next
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box';
+  document.getElementById('btn-next').className = 'btn-next';
+}
+
+function submitAnswer(chosen) {
+  const q = sessionQuestions[currentIdx];
+  const isCorrect = chosen === q.answer;
+
+  answers.push({ question: q, chosen, isCorrect });
+
+  // Highlight options
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    const letter = Object.keys(q.options)[i];
+    if (letter === q.answer) btn.classList.add('correct');
+    else if (letter === chosen && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // Show feedback
+  const fb = document.getElementById('feedback-box');
+  const title = document.getElementById('feedback-title');
+  const ansEl = document.getElementById('feedback-answer');
+  const expEl = document.getElementById('feedback-explanation');
+
+  if (isCorrect) {
+    fb.className = 'feedback-box correct-fb show';
+    title.textContent = '🎉 Great!';
+  } else {
+    fb.className = 'feedback-box wrong-fb show';
+    title.textContent = '😢 答錯別氣餒！可以問同學或是 Edwina！';
+  }
+  ansEl.textContent = `正確答案：(${q.answer}) ${q.options[q.answer]}`;
+  expEl.textContent = q.explanation;
+
+  // Show next button
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.className = 'btn-next show';
+  if (currentIdx === sessionQuestions.length - 1) {
+    nextBtn.textContent = '查看結果 ✦';
+  } else {
+    nextBtn.textContent = '下一題 →';
+  }
+}
+
+function nextQuestion() {
+  currentIdx++;
+  if (currentIdx >= sessionQuestions.length) {
+    showResults();
+  } else {
+    showQuestion();
+  }
+}
+
+// ── RESULTS ──
+function showResults() {
+  const elapsed = Date.now() - startTime;
+  const correct = answers.filter(a => a.isCorrect).length;
+  const total = answers.length;
+  const pct = Math.round((correct / total) * 100);
+
+  // Score circle
+  const circle = document.getElementById('score-circle');
+  circle.className = 'score-circle ' + (pct >= 80 ? 'score-high' : pct >= 50 ? 'score-mid' : 'score-low');
+  document.getElementById('score-pct').textContent = pct + '%';
+
+  document.getElementById('stat-time').textContent = formatTime(elapsed);
+  document.getElementById('stat-correct').textContent = correct + ' 題';
+  document.getElementById('stat-wrong').textContent = (total - correct) + ' 題';
+
+  // Build result list: wrong first
+  const wrongAnswers = answers.filter(a => !a.isCorrect);
+  const rightAnswers = answers.filter(a => a.isCorrect);
+  const sorted = [...wrongAnswers, ...rightAnswers];
+
+  const list = document.getElementById('result-list');
+  list.innerHTML = '';
+  sorted.forEach((a, i) => {
+    const q = a.question;
+    const item = document.createElement('div');
+    item.className = 'result-item' + (a.isCorrect ? '' : ' wrong-item');
+
+    // Build options HTML
+    const optsHtml = Object.entries(q.options).map(([letter, text]) => {
+      let cls = '';
+      if (letter === q.answer) cls = 'opt-correct';
+      else if (letter === a.chosen && !a.isCorrect) cls = 'opt-wrong-chosen';
+      return `<div class="ri-opt ${cls}"><span class="opt-letter">(${letter})</span><span>${text}</span></div>`;
+    }).join('');
+
+    const ansLabel = a.isCorrect
+      ? `<span style="color:var(--green)">${a.question.answer}</span>`
+      : `<span class="ri-wrong-ans">${a.chosen} → ${q.answer}</span>`;
+
+    item.innerHTML = `
+      <div class="ri-header">
+        <div class="ri-num">${i + 1}</div>
+        <div class="ri-icon">${a.isCorrect ? '✓' : '✗'}</div>
+        <div class="ri-stem">${q.stem.length > 55 ? q.stem.slice(0, 55) + '…' : q.stem}</div>
+        <div class="ri-ans">${ansLabel}</div>
+        <div class="ri-arrow">▼</div>
+      </div>
+      <div class="ri-body">
+        <div class="ri-full-stem">${q.stem}</div>
+        <div class="ri-options">${optsHtml}</div>
+        <div class="ri-explanation">📝 ${q.explanation}</div>
+      </div>
+    `;
+
+    item.querySelector('.ri-header').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+
+    list.appendChild(item);
+  });
+
+  showScreen('results');
+}
+
+function retryQuiz() {
+  // Reshuffle same questions
+  sessionQuestions = shuffle(sessionQuestions);
+  currentIdx = 0;
+  answers = [];
+  showScreen('quiz');
+  showQuestion();
+}
+
+function nextRound() {
+  showScreen('setup');
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(`screen-${name}`).classList.add('active');
+}
+
+// Init
+buildSetup();
+</script>
+</body>
+</html>
