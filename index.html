@@ -823,7 +823,7 @@ function submitAnswer(chosen) {
     title.textContent = '🎉 Great!';
   } else {
     fb.className = 'feedback-box wrong-fb show';
-    title.textContent = '😢 答錯別氣餒！可以問同學或是 Edwina！';
+    title.textContent = '😢 答錯別氣餒！弄懂它更重要！';
   }
   ansEl.textContent = `正確答案：(${q.answer}) ${q.options[q.answer]}`;
   expEl.textContent = q.explanation;
