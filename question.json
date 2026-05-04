@@ -728,16 +728,16 @@
         {
           "stem": "Simon：Why ___ Jerry and Lisa play cards with us? Henry：Because they want to go to the movies.",
           "options": {
-            "A": "don\\'t",
-            "B": "isn\\'t",
-            "C": "aren\\'t",
-            "D": "doesn\\'t"
+            "A": "don't",
+            "B": "isn't",
+            "C": "aren't",
+            "D": "doesn't"
           },
           "answer": "A",
           "explanation": "主詞 Jerry and Lisa 為複數，否定疑問句用 don't，故選 (A)。"
         },
         {
-          "stem": "David：Have you seen John\\'s sister? Kevin：Yes, I ___. She\\'s the most beautiful girl I\\'ve ever seen.",
+          "stem": "David：Have you seen John's sister? Kevin：Yes, I ___. She's the most beautiful girl I've ever seen.",
           "options": {
             "A": "have",
             "B": "had",
@@ -1467,7 +1467,7 @@
             "D": "has bumped"
           },
           "answer": "A",
-          "explanation": "would you like me to help，此題主詞為 asking questions（動名詞，單數），動詞應為 helps，選 (A)。"
+          "explanation": "see 為感官動詞，後面要接原型動詞(bump)或是動名詞(bumping)，故選 (A)。"
         },
         {
           "stem": "Mrs. Wilson ___ her son wash the dishes after dinner.",
@@ -1478,10 +1478,10 @@
             "D": "invited"
           },
           "answer": "A",
-          "explanation": "sense + for sb. + to V 句型，「對某人來說做某事是重要的」，It was important for Kevin to finish，用不定詞，故選 (B)。"
+          "explanation": "使役動詞(make, let, have)要接原型動詞 (wash)，故選 (A)。"
         },
         {
-          "stem": "Bruce：When did Roger change his job? Laura：He hasn\\'t changed his job. He still works in the same computer store. Bruce：But I saw him ___ watches on the street corner.",
+          "stem": "Bruce：When did Roger change his job? Laura：He hasn't changed his job. He still works in the same computer store. Bruce：But I saw him ___ watches on the street corner.",
           "options": {
             "A": "sold",
             "B": "to sell",
@@ -1489,7 +1489,7 @@
             "D": "selling"
           },
           "answer": "D",
-          "explanation": "動名詞 Playing 作主詞，視為單數，動詞用 is，故選 (A)。"
+          "explanation": "see 為感官動詞，後面要接原型動詞(sell)或是動名詞(selling)，故選 (D)"
         },
         {
           "stem": "The teachers make us ___ harder by giving us tests.",
@@ -1500,7 +1500,7 @@
             "D": "studying"
           },
           "answer": "A",
-          "explanation": "tell sb. not to V 為固定用法，表示「告訴某人不要做某事」，故選 (D) to study。"
+          "explanation": "使役動詞(make, let, have)要接原型動詞 (study)，故選 (A)。"
         },
         {
           "stem": "The little boy jumped up and down happily when he saw a bee ___ into the house.",
@@ -1511,7 +1511,7 @@
             "D": "has flown"
           },
           "answer": "C",
-          "explanation": "make 使役動詞後接原形動詞，make me finish，故選 (A)。"
+          "explanation": "see 為感官動詞，後面要接原型動詞(fly)或是動名詞(flying)，故選 (C)。"
         },
         {
           "stem": "Studying in a foreign country ___ me a lot of money. That's why I had to sell my apartment.",
@@ -1522,7 +1522,7 @@
             "D": "spent"
           },
           "answer": "A",
-          "explanation": "動名詞片語 Previewing the lesson 作主詞，表示「預習功課」這個行為，用 Previewing，故選 (D)。"
+          "explanation": "動名詞(studying in a foreign conutry)當主詞視為一件事情，且後方提到money，符合cost的用法。事物當主詞+cost+錢。"
         },
         {
           "stem": "It took the police lots of time ___ who entered Liu's house and killed her one year ago.",
@@ -1544,7 +1544,7 @@
             "D": "are jumping"
           },
           "answer": "C",
-          "explanation": "主詞需要動名詞形式 getting up（早起這件事），後接形容詞補語 is difficult，故選 (D)。"
+          "explanation": "see 為感官動詞，後面要接原型動詞(jump)或是動名詞(jumping)，故選 (C)。"
         },
         {
           "stem": "Mike：When did Laura become a taxi driver? Jerry：She is NOT a taxi driver. She\\'s a nurse. Mike：But I saw her ___ a taxi yesterday! Jerry：Oh, maybe it was her younger sister!",
@@ -1605,7 +1605,7 @@
             "D": "have"
           },
           "answer": "A",
-          "explanation": "動名詞（Playing\\...）當主詞表單數，而空格後為形容詞片語 good for（對......好），故空格應填入表單數的 be 動詞，故選 (A)。"
+          "explanation": "動名詞（Playing...）當主詞表單數，而空格後為形容詞片語 good for（對......好），故空格應填入表單數的 be 動詞，故選 (A)。"
         },
         {
           "stem": "The most convenient way to get around this small town is ___ a bike.",
@@ -1878,7 +1878,7 @@
           "explanation": "Lucy 穿褲子看起來比穿裙子好看。由題目中的 than（比......更......）可知答案應選比較級 prettier（較漂亮的）。"
         },
         {
-          "stem": "For Mike, the price is \\_\\_\\_\\_\\_ important thing when he shops for jeans. He cares even more about the shape and the size of the pockets.",
+          "stem": "For Mike, the price is ___ important thing when he shops for jeans. He cares even more about the shape and the size of the pockets.",
           "options": {
             "A": "the more",
             "B": "the most",
@@ -1944,7 +1944,7 @@
           "explanation": "分號後一句用於補充說明分號前一句的意思。而分號後一句的 him 指前句提到的 Clark；因此，後句在表達只有 Lois 與 Lana 兩人「早於 Clark」在此餐廳工作。所以，前句是說：這餐廳裡「很少數」人「比 Clark 年資久」，故選 (D)。"
         },
         {
-          "stem": "Elsa：Did Eric buy any vegetables in the market? Bob：No, he didn\\'t, but he bought ___ fish.",
+          "stem": "Elsa：Did Eric buy any vegetables in the market? Bob：No, he didn't, but he bought ___ fish.",
           "options": {
             "A": "no",
             "B": "any",
@@ -2099,7 +2099,7 @@
       "name": "主題9 副詞",
       "questions": [
         {
-          "stem": "Bill：Have you ever been to Hong Kong? Ted：Yes, ___. It\\'s really a fun place to go.",
+          "stem": "Bill：Have you ever been to Hong Kong? Ted：Yes, ___. It's really a fun place to go.",
           "options": {
             "A": "five days",
             "B": "for three years",
@@ -2143,7 +2143,7 @@
           "explanation": "gets excited 為動詞片語，修飾動詞用副詞 easily，故選 (C)。"
         },
         {
-          "stem": "George：___ do you practice playing the piano? Tommy：When my mom is at home, I have to practice EVERY DAY, but she\\'s away on a business this week!",
+          "stem": "George：___ do you practice playing the piano? Tommy：When my mom is at home, I have to practice EVERY DAY, but she's away on a business this week!",
           "options": {
             "A": "How about",
             "B": "How long",
@@ -2176,7 +2176,7 @@
           "explanation": "完成式的句子中，常用副詞 already 與 yet 來表達已經完成或尚未完成的動作，而 yet 常用於疑問句表示「已經」或否定句表示「尚未」，故選 (D)。"
         },
         {
-          "stem": "Allen：George looks strong. Has he ever been sick? Doris：He\\'s a superman! He ___ goes to the doctor.",
+          "stem": "Allen：George looks strong. Has he ever been sick? Doris：He's a superman! He ___ goes to the doctor.",
           "options": {
             "A": "already",
             "B": "even",
@@ -2270,7 +2270,7 @@
           "explanation": "Phoebe 的回答內容為原因說明，故選詢問原因的 (D)「為什麼」。"
         },
         {
-          "stem": "Lucy：___ is Ted doing in the kitchen? Ryan：He\\'s cooking dinner for us.",
+          "stem": "Lucy：___ is Ted doing in the kitchen? Ryan：He's cooking dinner for us.",
           "options": {
             "A": "What",
             "B": "Where",
@@ -2305,9 +2305,9 @@
         {
           "stem": "Carl：___? Tina：It's three thirty. Why? You look worried. Carl：I have a math test at four o'clock.",
           "options": {
-            "A": "How much money do you have\\",
-            "B": "What day is today\\",
-            "C": "When does your school begin\\",
+            "A": "How much money do you have",
+            "B": "What day is today",
+            "C": "When does your school begin",
             "D": "What time is it"
           },
           "answer": "D",
@@ -2322,7 +2322,7 @@
             "D": "What"
           },
           "answer": "A",
-          "explanation": "Kevin：我穿哪一件毛衣比較好看，紅色的還是藍色的？\\ Betty：我覺得紅色的比較好。根據上下文，Kevin 請 Betty 做一選擇，所以應選 which（哪一個）。"
+          "explanation": "Kevin：我穿哪一件毛衣比較好看，紅色的還是藍色的？ Betty：我覺得紅色的比較好。根據上下文，Kevin 請 Betty 做一選擇，所以應選 which（哪一個）。"
         },
         {
           "stem": "Robert：Where are the boys playing? Barbie：___",
@@ -2369,7 +2369,7 @@
           "explanation": "Jerry 回答他的法文課情況（進展如何），問的是課程狀況，用 How's，故選 (A)。"
         },
         {
-          "stem": "Mr. Wang：___ are the children? Ms. Chen：They\\'re having fun in the playground.",
+          "stem": "Mr. Wang：___ are the children? Ms. Chen：They're having fun in the playground.",
           "options": {
             "A": "Who",
             "B": "What",
@@ -2435,7 +2435,7 @@
           "explanation": "Lisa 不知道餐廳「在哪裡」，間接問句用 where，故選 (B)。"
         },
         {
-          "stem": "Son：Mom, ___ are my glasses? Mom：Aren\\'t they on the table in the living room?",
+          "stem": "Son：Mom, ___ are my glasses? Mom：Aren't they on the table in the living room?",
           "options": {
             "A": "what",
             "B": "when",
@@ -2496,7 +2496,7 @@
           "explanation": "Jacky想把那隻可憐的狗兒帶回家，但他不確定他媽媽是否喜歡狗。(A) 如何 (B) 什麼 (C) 是否 (D) 何者。whether為「是否」，後接子句，表示「不知是否喜歡狗」。"
         },
         {
-          "stem": "A- wei：This typhoon is so terrible! A- fen：Yes, I\\'m not sure ___ we can still go fishing tomorrow.",
+          "stem": "A- wei：This typhoon is so terrible! A- fen：Yes, I'm not sure ___ we can still go fishing tomorrow.",
           "options": {
             "A": "who",
             "B": "what",
@@ -2623,7 +2623,7 @@
           "explanation": "be famous for... 表「以......聞名」，而關係代名詞於關係子句中當受格時可以省略，故選 (D)。"
         },
         {
-          "stem": "Eva：What\\'s your ideal mate like? Ada：Well, I want a husband who ___ well. I enjoy eating, but I hate kitchens.",
+          "stem": "Eva：What's your ideal mate like? Ada：Well, I want a husband who ___ well. I enjoy eating, but I hate kitchens.",
           "options": {
             "A": "cook",
             "B": "cooks",
