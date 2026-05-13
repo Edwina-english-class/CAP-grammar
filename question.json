@@ -2115,10 +2115,10 @@
             "A": "Since yesterday.",
             "B": "Two days ago.",
             "C": "One hour.",
-            "D": "Every"
+            "D": "Every day."
           },
           "answer": "D",
-          "explanation": "How often 問的是頻率，答案需是頻率副詞，Every（天）是頻率答法，故選 (D)。"
+          "explanation": "How often 問的是頻率，答案需是頻率副詞，Every day（每天）是頻率答法，故選 (D)。"
         },
         {
           "stem": "Alice：How often do you wash your hair? Betty：___.",
